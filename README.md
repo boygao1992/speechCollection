@@ -60,6 +60,7 @@ De-imperative, Why functional
 
 ### 1.2
 1. GHCi basic commands
+
 | command | functionality |
 |---------|---------------|
 | `:t`    | expression    |
@@ -151,6 +152,8 @@ value: a unique symbol which is distinct from "others"
 4. Bottom, a calculation that never ends / infinite calculation (for non-strict/lazy evaluation), is a special element in every Type, so even `Void` is not strictly empty
 
 5. `Unit`
+
+6. Type and its corresponding Type constructor are of the same name.
 
 # Computer Vision
 
