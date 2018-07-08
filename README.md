@@ -158,3 +158,63 @@ value: a unique symbol which is distinct from "others"
 # Computer Vision
 
 ## 1.[Stanford CS231n](https://www.youtube.com/playlist?list=PLf7L7Kg8_FNxHATtLwDceyh72QQL9pvpQ)
+
+### lec 1
+
+1. History of computer vision
+  - Hubel & Wiesel, 1959
+  - Block world, Larry Roberts, 1963
+  - Vision, David Marr, 1970s
+  - Stages of Visual Representation, David Marr, 1970s
+  - Pictorial Structure, Fischler and Elschlager, 1973
+  every object is composed of simple geometric primitives
+  - Generalized Cylinder, Brooks & Binford, 1979
+  - Razor edge detection, David Lowe, 1987
+  - Normalized Cut, Shi & Malik, 1997
+  Image segmentation
+  - Face Detection, Viola & Jones, 2001
+  - "SIFT" & Object Recognition, David Lowe, 1999
+  - Spatial Pyramid Matching, Lazebnik, Schmid & Ponce, 2006
+  - Histogram of oriented gradients (HoG), Dalal & Triggs, 2005
+  - Deformable Part Model, Felzenswalb, McAllester, Ramanan, 2009
+  - Pascal Visual Object Challenge (20 object categories), 2006-2012
+  - [ImageNet (22K categories, 14M images)](www.image-net.org), 2009
+  - Image Classification Challenge (1K object classes), Russakovsky et al. arXiv, 2014
+
+2. Basic tasks
+  - object detection
+  - action classification / activity recognition
+  - image captioning
+    - semantic segmentation, perceptual grouping
+    Image Retrieval using Scene Graph, Johnson et al., 2015
+  - 3d reconstruction
+
+3. CNN
+  - LeCun et al., 1998
+  - NEC-UIUC, Lin CVPR 2011
+  - SuperVision, Krizhevsky NIPS 2012 (break through)
+  - GoogLeNet, Szegedy arxiv 2014
+  - VGG, Simonyan arxiv 2014
+  - MSRA, 2015
+
+### lec 2
+1. classifier
+2. training
+3. K-NN
+4. hyperparameter, validation set, n-fold cross validation
+5. curse of dimensionality
+6. L2 distance on pixel space not informative
+7. linear classifier
+8. nonlinearity
+
+CIFAR10
+
+### lec 3
+1. loss function
+2. SVM loss, L1/L2 regulization
+3. softmax (logistic regression)
+4. stochastic gradient descent
+
+### lec 4
+1. gradient calcuation for backpropagation, chain rule
+2. vectorize matrix operations
