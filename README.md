@@ -155,6 +155,61 @@ value: a unique symbol which is distinct from "others"
 
 6. Type and its corresponding Type constructor are of the same name.
 
+## 2.[Morten Rand-Hendriksen: CSS Grid Changes Everything (About Web Layouts)](https://www.youtube.com/watch?v=txZq7Laz7_4)
+
+## 3.[PS Unscripted - Code Reuse in PS: Fns, Classes, and Interpreters](https://www.youtube.com/watch?v=GlUcCPmH8wI&t=1885s)
+
+A bottom-up way of explaining `Functor` and Type Classes.
+Show their power of generalization by examples.
+Also, the pain without compiler's auto dispatch.
+Inconsistency is inevitable when manually injecting implementations especially facing "diamond problem" (multiple inheritance).
+
+## 4.[Front-End Development with PureScript and Thermite](https://www.youtube.com/watch?v=-l2ySRCjihc&t=1233s)
+
+A React wrapper for Purescript
+
+[purescript-thermite](https://github.com/paf31/purescript-thermite)
+
+Local state management following React model.
+The denotational syntax for view/render function is pretty close to Elm.
+The way it manipulates `EventHandler`s may be useful.
+Use `coroutine` to handle IO effects.
+
+```purescript
+newtype Spec eff State Action = Spec
+  { performAction :: PerformAction eff State Action
+  , render        :: Render State Action
+  }
+
+type PerformAction eff State Action
+  = Action
+  -> State
+  -> CoTransformer (Maybe a) (State -> State) (Aff eff) Unit
+  
+type Render State Action
+  = (Action -> EventHandler)
+  -> State
+  -> Array ReactElement
+  -> Array ReactElement
+
+simpleSpec
+  :: forall eff State Action
+  . PerformAction eff State Action
+  -> Render State Action
+  -> Spec eff State Action
+```
+
+coroutine
+``` purescript
+type Co f m = FreeT f m
+
+data Emit o a = Emit o a
+type Producer o = Co (Emit o)
+
+newtype Await i a = Await (i -> a)
+type Consumer i = Co (Await i)
+```
+
 # Computer Vision
 
 ## 1.[Stanford CS231n](https://www.youtube.com/playlist?list=PLf7L7Kg8_FNxHATtLwDceyh72QQL9pvpQ)
