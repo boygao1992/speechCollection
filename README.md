@@ -159,12 +159,37 @@ value: a unique symbol which is distinct from "others"
 
 ## 2.[Morten Rand-Hendriksen: CSS Grid Changes Everything (About Web Layouts)](https://www.youtube.com/watch?v=txZq7Laz7_4)
 
-## 3.[PS Unscripted - Code Reuse in PS: Fns, Classes, and Interpreters](https://www.youtube.com/watch?v=GlUcCPmH8wI&t=1885s)
+## 3.[PS Unscripted - Code Reuse in PS: Fns, Classes, and Interpreters](https://www.youtube.com/watch?v=GlUcCPmH8wI)
 
 A bottom-up way of explaining `Functor` and Type Classes.
 Show their power of generalization by examples.
 Also, the pain without compiler's auto dispatch.
 Inconsistency is inevitable when manually injecting implementations especially facing "diamond problem" (multiple inheritance).
+
+"Dependency injection" in FP.
+> P.77
+
+Independent reusable functionality in Type Classes.
+
+Comparison of reusability by type signatures.
+
+Abstract out assumptions by introducing wild card type signature.
+
+- initial encoding (inject implementation, Factory?)
+- final encoding
+
+``` purescript
+data RealCode a
+  = ReadFile String (Maybe String -> a)
+  | Done a
+```
+
+`a` abstracts the way you want to inspect the return type
+e.g. `Identity`(debug), `Aff`(real implementation)
+
+This operator-like data structure is a tree / `Free`.
+
+`realCodeToAff`, interpreter, `CoFree`?
 
 ## 4.[Front-End Development with PureScript and Thermite](https://www.youtube.com/watch?v=-l2ySRCjihc&t=1233s)
 
