@@ -239,6 +239,218 @@ type Consumer i = Co (Await i)
 
 ## 5.[Lambda Calculus for People Who Can’t Be Bothered to Learn It](https://www.youtube.com/watch?v=c_ReqkiyCXo)
 
+[github](https://github.com/sjsyrek/presentations/tree/master/lambda-calculus)
+
+#### definition 
+- `<expression>  := <name> | <function> | <application>`
+- `<function>    := λ <name>. <expression>`
+- `<application> := <expression> <expression>`
+
+> capture the nature of computation in the simplest possible way
+
+examples
+- `(λx. x)(λy. y)`,
+function composition of two identity functions, `f ◦ g` where `f` and `g` are both `id :: a -> a`.
+
+``` javascript
+const func = x => (y => y)
+
+const id = a => a
+const f = id
+const g = id
+const fg = f(g)
+```
+
+#### reduction
+- α-conversion/renaming, allows bound variable names to be changed
+  - `(λa. a) ≡ (λz. z)`
+- β-reduction, applying functions to their arguments
+  - `(λx. λy. x y) p q → (λy. p y) q → p q`
+  - `(λx. x x)(λx. x x) → (λx. x x)(λx. x x) → …` (recursion)
+- η-conversion, captures a notion of extensionality
+  - `(λx . f x) ⟷ f` (point-free for a unary function)
+
+#### identity combinator (universal fixed-point combinator)
+- `id ≡ λx. x` (I combinator)
+
+#### boolean combinators
+Church Encoding, represent data and operators by lambda functions
+
+- `true ≡ (λx. λy. x)` (K combinator)
+- `false ≡ (λx. λy. y)`
+- `and ≡ (λa. λb. a b false)`
+- `or  ≡ (λa. λb. a true b)`
+- `not ≡ (λa. a false true)`
+
+example
+```
+and true false
+= (λa. λb. a b false) true false
+= (λb. true b false) false
+= (λb. (λx. λy. x) b false) false
+= (λb. b) false
+= false
+```
+
+Since `true` is a function (K combinator), we can have "non-boolean algebra"
+```
+true false false
+= (λx. λy. x) false false
+= false
+```
+This is actually how `and` operator and other operators work. 
+Internally, it takes advantage of the "forgetting" pattern of K combinator (throwing away the 2nd argument) and its dual (throwing away the 1st argument).
+
+`Bool` under `and` is a `Semigroup`(`Bool`, `and`)
+```elm
+type Bool 
+    = True
+    | False
+
+append : Bool -> Bool -> Bool
+append b1 b2 =
+    case ( b1, b2 ) of
+        ( True, True ) ->
+            True
+        _ ->
+            False
+
+(<>) : Bool -> Bool -> Bool
+(<>) = append
+```
+
+#### numbers (Church numerals)
+- `0 ≡ (λf. λx. x)` (`≡ (λx. λy. y) ≡ false`)
+- `1 ≡ (λf. λx. f(x))`
+- `2 ≡ (λf. λx. f(f(x)))`
+- `3 ≡ (λf. λx. f(f(f(x))))`
+- `4 ≡ (λf. λx. f(f(f(f(x)))))`
+- `…`
+
+#### enumeration
+- `succ ≡ (λn. λf. λx. f(n f x))`
+- `pred ≡ (λn. n (λp. λz. z(succ (p true))(p true))(λz. z 0 0) false)`
+
+another definition: `PRED := λn.λf.λx.n (λg.λh.h (g f)) (λu.x) (λu.u)`
+
+example
+```
+succ 1
+= (λn. λf. λx. f(n f x)) 1
+= (λf. λx. f(1 f x))
+= (λf. λx. f((λf. λx. f(x)) f x))
+= (λf. λx. f(f(x))
+= 2
+```
+
+example
+```
+pred 1
+= (λn. n (λp. λz. z(succ (p true))(p true))(λz. z 0 0) false) 1
+= (1 (λp. λz. z(succ (p true))(p true))(λz. z 0 0) false)
+= ((λf. λx. f(x)) (λp. λz. z(succ (p true))(p true))(λz. z 0 0) false)
+= ((λp. λz. z(succ (p true))(p true))(λz. z 0 0) false)
+= ((λz. z(succ ((λz. z 0 0) true))((λz. z 0 0) true)) false)
+= ((λz. z(succ (true 0 0))(true 0 0)) false)
+= ((λz. z(succ 0)(0)) false)
+= ((λz. z(1)(0)) false)
+= (false (1)(0)) 
+= 0
+```
+
+```
+PRED 1
+= (λn.λf.λx.n (λg.λh.h (g f)) (λu.x) (λu.u)) 1
+= (λf.λx. 1 (λg.λh.h (g f)) (λu.x) (λu.u))
+= (λf.λx. (λf. λx. f(x)) (λg.λh.h (g f)) (λu.x) (λu.u))
+= (λf.λx. (λx. (λg.λh.h (g f)) (x)) (λu.x) (λu.u))
+= (λf.λx. (λx. (λh.h (x f))) (λu.x) (λu.u))
+= (λf.λx. (λh.h ((λu.x) f)) (λu.u))
+= (λf.λx. (λu.u) ((λu.x) f))
+= (λf.λx. (λu.x) f)
+= (λf.λx. x)
+= 0
+```
+
+#### predicates
+- `isZero ≡ (λn. n false not false)`
+
+example
+```
+isZero 0
+= (λn. n false not false) 0
+= 0 false not false
+= (λf. λx. x) false not false
+= not false
+= true
+
+isZero 1
+= 1 false not false
+= (λf. λx. f(x)) false not false
+= false not false
+= false
+```
+
+- `isTrue ≡ id`
+- `isFalse = (λx. x false true)`
+
+- `if ≡ (λp. λx. λy. p x y)`
+
+example
+```
+if true
+= (λp. λx. λy. p x y) true
+= true x y
+= x
+
+if false
+= (λp. λx. λy. p x y) false
+= false x y
+= y
+```
+
+in a different perspective, `true` and `false` are less generic `if` (obvious, since `if` has one additional bound variable)
+- `true ≡ (λx. λy. x) ≡ if(true)`
+- `false ≡ (λx. λy. y) ≡ if(false)`
+
+```javascript
+if (predicate) {
+  // true
+} {
+  // false
+}
+
+if (true) {
+  // always pick the first branch
+} else {
+}
+
+if (false) {
+} else {
+  // always pick the second branch
+}
+```
+
+#### arithmetic
+
+- `add ≡ (λn. λm. λf. λx. n f(m f x))`
+- `add ≡ (λn. λm. m succ n)`
+- `sub ≡ (λm. λn. n pred m)`
+- `mult ≡ (λn. λm. λf. n(m f))`
+- `mult ≡ (λn. λm. m (add n) 0)`
+- `exp ≡ (λx. λy. y x)`
+
+#### recursion
+
+- `fix ≡ (λy. (λx. y(x x))(λx. y(x x)))`
+- `F ≡ (λf. λn. ((isZero n) 1 (mult n (f(pred n)))))`
+
+#### factorial
+
+- `fact ≡ (fix F)`
+
+## 6.[Async Programming in Purescript - LA PureScript Meetup 12_05_17](https://www.youtube.com/watch?v=dbM72ap30TE)
+
 # Computer Vision
 
 ## 1.[Stanford CS231n](https://www.youtube.com/playlist?list=PLf7L7Kg8_FNxHATtLwDceyh72QQL9pvpQ)
