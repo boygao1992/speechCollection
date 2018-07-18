@@ -514,3 +514,17 @@ CIFAR10
 ### lec 4
 1. gradient calcuation for backpropagation, chain rule
 2. vectorize matrix operations
+
+# Math
+
+## 1.[John Conway: Surreal Numbers - How playing games led to more numbers than anybody ever thought of](https://www.youtube.com/watch?v=1eAmxgINXrE)
+
+> Surreal number
+> Combinatorial game theory
+> Impartial games, Partisan game
+> Transfinite number
+> Dedekind cut, Conway cut
+
+`{|} = 0`
+`{0|}= -1, {|0}= 1`
+`{-1,0|} = -2, {|0,1} = 2`
