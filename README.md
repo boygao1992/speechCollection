@@ -451,6 +451,11 @@ if (false) {
 
 ## 6.[Async Programming in Purescript - LA PureScript Meetup 12_05_17](https://www.youtube.com/watch?v=dbM72ap30TE)
 
+## 7.[Thai Pangsakulyanont: Smells In React Apps - JSConf.Asia 2018](https://www.youtube.com/watch?v=xBa0_b-5XDw)
+
+> Generic components
+> Information leaks
+
 # Computer Vision
 
 ## 1.[Stanford CS231n](https://www.youtube.com/playlist?list=PLf7L7Kg8_FNxHATtLwDceyh72QQL9pvpQ)
@@ -529,3 +534,7 @@ CIFAR10
 `{0|}= -1, {|0}= 1`
 `{-1,0|} = -2, {|0,1} = 2`
 `{0|1} = 1/2`
+
+# Politics
+
+## 1.[Kishore Mahbubani and Weiwei Zhang - new world order](https://www.bilibili.com/video/av27093393)
