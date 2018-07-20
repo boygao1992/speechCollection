@@ -453,8 +453,27 @@ if (false) {
 
 ## 7.[Thai Pangsakulyanont: Smells In React Apps - JSConf.Asia 2018](https://www.youtube.com/watch?v=xBa0_b-5XDw)
 
+
 > Generic components
+
+fully independent state for reusability
+
+inject dependencies/constraints by decoration
+
 > Information leaks
+> "Does this really need to know about that?"
+
+strive for minimal dependencies between components
+
+> Cohesion loss
+> Symptom: Making a simple change requires changing code that is further apart. 
+> Related things should stay close together.
+> aiming for functional cohesion instead of logical cohesion
+
+code organization, especially view functions
+- logical cohesion: similarity in locality (in DOM)
+- functional cohesion: similarity in source of information
+
 
 # Computer Vision
 
