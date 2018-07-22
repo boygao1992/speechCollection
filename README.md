@@ -474,6 +474,21 @@ code organization, especially view functions
 - logical cohesion: similarity in locality (in DOM)
 - functional cohesion: similarity in source of information
 
+## 8. Elm Europe 2017
+
+### 1. [Elm Europe 2017 - Matthew Griffith - Understanding style](https://www.youtube.com/watch?v=NYb2GDWMIm0)
+
+### 2. [Elm Europe 2017 - Jakub Hampl - Visualizing data with elm](https://www.youtube.com/watch?v=Pf1xQ76JgmQ)
+
+### 3. ["Infecting the visualization design process with the elm philosophy" by Alexander Kachkaev](https://www.youtube.com/watch?v=K-yoLxnm95A)
+
+### 4. [Elm Europe 2017 - Andrey Kuzmin - Bringing the fun to graphics programming](https://www.youtube.com/watch?v=Z-6ETEBNlMs)
+
+WebGL
+
+### 5. ["Lessons from 100k LOC elm at Futurespace" by Mark Skipper and Decio Ferreira](https://www.youtube.com/watch?v=0AosqGTEa0Q)
+
+### 6. [Elm Europe 2017 - Richard Feldman - Scaling Elm Apps](https://www.youtube.com/watch?v=DoA4Txr4GUs&t=986s)
 
 # Computer Vision
 
