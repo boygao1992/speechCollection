@@ -490,6 +490,21 @@ WebGL
 
 ### 6. [Elm Europe 2017 - Richard Feldman - Scaling Elm Apps](https://www.youtube.com/watch?v=DoA4Txr4GUs&t=986s)
 
+## 9. [Elm in Production: Surprises & Pain Points](https://www.youtube.com/watch?v=LZj_1qVURL0)
+
+> the DOM is off-limits
+`FFI` by `port` to utilized native JS libraries
+
+> selective Event Handling
+filter `KeyCode` on parent component with a customized `Attribute` with `onWithOptions` provided `preventDefault = True` to prevent default browser behaviors for a targeted subset of primitive events
+
+> CSS Modules
+- wrap the Elm app in a React Component and inject the CSS modules as part of the payload.
+- define corresponding data model for the imported css modules and write a JSON `Decoder` for it
+
+a bit of boilerplate here
+
+
 # Computer Vision
 
 ## 1.[Stanford CS231n](https://www.youtube.com/playlist?list=PLf7L7Kg8_FNxHATtLwDceyh72QQL9pvpQ)
@@ -571,7 +586,7 @@ CIFAR10
 
 ## 2. Category Theory III - Bartosz Milewski
 
-[Category Theory III 1.1: Overview part 1](https://www.youtube.com/watch?v=F5uEpKwHqdk)
+### 1.1 [Overview part 1](https://www.youtube.com/watch?v=F5uEpKwHqdk)
 
 > Hunter and gathering era, no necessity for number system
 > distinguishing "few" (one) and "many" (two) is enough
@@ -582,6 +597,13 @@ CIFAR10
 `map :: Functor m => (a -> b) -> m a -> m b`
 > `Monad` <-> Evaluation (substitute Variables by Expressions)
 `bind :: Monad m => (a -> m b) -> m a -> m b`
+
+> Free algebra
+
+> `Free Monoid` is the most general construct that satisfies `Monoid` laws
+> `List` is a `Free Monoid`, so you don't need to enforce `Monoid` laws on it when constructing one
+
+### 1.2 [Overview part 2](https://www.youtube.com/watch?v=CfoaY2Ybf8M)
 
 # Politics
 
