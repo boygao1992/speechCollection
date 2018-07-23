@@ -569,6 +569,20 @@ CIFAR10
 `{-1,0|} = -2, {|0,1} = 2`
 `{0|1} = 1/2`
 
+## 2. Category Theory III - Bartosz Milewski
+
+[Category Theory III 1.1: Overview part 1](https://www.youtube.com/watch?v=F5uEpKwHqdk)
+
+> Hunter and gathering era, no necessity for number system
+> distinguishing "few" (one) and "many" (two) is enough
+> Geometry = Geo- (Earth) -Metry (Measure)
+> rooted in agriculture, people started to have personal belonging
+
+> `Functor` <-> Expression
+`map :: Functor m => (a -> b) -> m a -> m b`
+> `Monad` <-> Evaluation (substitute Variables by Expressions)
+`bind :: Monad m => (a -> m b) -> m a -> m b`
+
 # Politics
 
 ## 1.[Kishore Mahbubani and Weiwei Zhang - new world order](https://www.bilibili.com/video/av27093393)
