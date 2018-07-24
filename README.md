@@ -505,6 +505,18 @@ filter `KeyCode` on parent component with a customized `Attribute` with `onWithO
 a bit of boilerplate here
 
 
+## 10. [The API Design Session video w/ Evan Czaplicki (@evancz)](https://www.youtube.com/watch?v=KSuCYUqY058)
+
+do not buffer and synchronize state variables like the way dealing with external state in the DOM
+
+take the state variables of interest as arguments
+
+expose a set of public messages for component users to handle in their app
+
+let users inject configurations to modify the view function and state handling logic
+
+let users inject translator to translate messages defined in this component to their messages
+
 # Computer Vision
 
 ## 1.[Stanford CS231n](https://www.youtube.com/playlist?list=PLf7L7Kg8_FNxHATtLwDceyh72QQL9pvpQ)
