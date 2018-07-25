@@ -490,7 +490,8 @@ WebGL
 
 ### 6. [Elm Europe 2017 - Richard Feldman - Scaling Elm Apps](https://www.youtube.com/watch?v=DoA4Txr4GUs&t=986s)
 
-## 9. [Elm in Production: Surprises & Pain Points](https://www.youtube.com/watch?v=LZj_1qVURL0)
+## 9. Kevin Yank on Elm
+[Elm in Production: Surprises & Pain Points](https://www.youtube.com/watch?v=LZj_1qVURL0)
 
 > the DOM is off-limits
 `FFI` by `port` to utilized native JS libraries
@@ -504,6 +505,53 @@ filter `KeyCode` on parent component with a customized `Attribute` with `onWithO
 
 a bit of boilerplate here
 
+[Elm at Scale: More Surprises, More Pain Points](https://www.youtube.com/watch?v=uQjivmLan0E)
+
+> CSS Modules
+[cultureamp/elm-css-modules-loader - Reference CSS modules in Elm source files with Webpack](https://github.com/cultureamp/elm-css-modules-loader)
+
+> compiling time
+> will be solve by 0.19 release
+
+> large SPAs
+[rtfeldman/elm-spa-example](https://github.com/rtfeldman/elm-spa-example)
+
+> missing features will be delivered in 0.19
+> - code splitting
+> - lazy loading
+> - tree shaking
+> - server-side rendering
+
+> team adoption: from 10% to 50%
+> start with embedding Elm app in React and gradually ship more things in Elm
+
+> animate to auto
+> cannot ask for `.scrollHeight` in Elm
+> custom event handler hack by `jsEventDecoder`
+> treating the Event Object as a JSON data so then able to fetch the rendered view properties
+
+> ```elm
+> viewToggleButton =
+>   button
+>     [
+>       class .toggle,
+>       on "click" (
+>         Json.map
+>           Expand -- Msg Constructor
+>           (
+>               Json.at 
+>                 [ "currentTarget"
+>                 , "parentNode"
+>                 , "firstChild"
+>                 , "lastChild"
+>                 , "scrollHeight"
+>                 ]
+>                 Json.int
+>           )
+>       )
+>     ]
+>     [ text "Show more"]
+> ```
 
 ## 10. [The API Design Session video w/ Evan Czaplicki (@evancz)](https://www.youtube.com/watch?v=KSuCYUqY058)
 
