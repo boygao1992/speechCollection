@@ -665,6 +665,68 @@ CIFAR10
 
 ### 1.2 [Overview part 2](https://www.youtube.com/watch?v=CfoaY2Ybf8M)
 
+## 3. Math History - NJ Wildberger
+
+### 16.[Differential Geometry | Math History | NJ Wildberger](https://www.youtube.com/watch?v=6xgtMQ7WSzQ)
+
+> Planar curves
+
+> involute, Huygens, unwrap a string tightly
+> all involutes are disjoint and perpendicular to tangents
+
+> envolute, at any given point on a curve, take another two points in the close neighbor to form a circle (osculating circle), as both points approaching the given point, the trajectory of the center of the circle (locus of centers) is the evolute
+> the stablized circle (two points infinitely close to the given point), the product inverse of its radius is the curvature at that given point
+
+> the evolute of an involute is the original curve
+
+> curvature formula, Huygens/Newton
+
+> catenary (cosh) = evolute of tractrix
+> tractrix = involute of a catenary
+
+> parabola
+> semicubical parabola = evolute of parabola
+
+> curves in 3D space
+> osculating circle (2D) -> osculating plane (3D), normal vector
+
+> surfaces in 3D space
+> a point on the surface, tangent plane, normal vector
+> a plane rotates around a normal vector intersecting with the surface to get a set of closed curves (planar cross-section curves)
+> their curvatues are bounded, max & min => principle curvatues of the surface at that given point
+
+> Theorema Egregium, Gauss
+> the product of principle curvatues is determinable from the surface itself
+> (direct measurement on the surface without embedding it in 3D)
+
+> sphere, constant curvature
+> psudosphere, tractrix revolved, constant curvature
+
+### 17.[Topology | Math History | NJ Wildberger](https://www.youtube.com/watch?v=aaXk23JHFck)
+
+> topology 
+> study properties invariant to continuous deformation
+
+> 2D surface
+> Euler characteristics
+
+> Descartes, curvature of polyhedra
+> total curvature of a polyhedron = Euler characteristics
+
+> Genus
+
+> Riemann, topological analysis of Complex functions
+> Riemann sphere (2-sphere, S^2) is homeomorphic to the Complex plane union with { Infinity }
+> `f(z) = z^2`
+> `f(z) = \sqrt(z)`, 2 full turns, gluing two 2-spheres with one hole on each (2 jumps to match the sign)
+> `f(z) = \sqrt(z(z-a)(z-b))`, 2 full turns, gluing two 2-spheres with two holes on each (4 jumps)
+
+> 2-sphere is the only simply connected 2-dimensional surface.
+> simply connected: any close loop on the surface can contract to a point.
+
+> 3D surface
+> Poincare Conjecture, 3-sphere is the only simply connected 3-dimensional surface.
+
 # Politics
 
 ## 1.[Kishore Mahbubani and Weiwei Zhang - new world order](https://www.bilibili.com/video/av27093393)
