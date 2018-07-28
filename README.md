@@ -490,6 +490,17 @@ WebGL
 
 ### 6. [Elm Europe 2017 - Richard Feldman - Scaling Elm Apps](https://www.youtube.com/watch?v=DoA4Txr4GUs&t=986s)
 
+> purpose of update function: routes messages to logic
+> "recommend sharing code with helper functions instead of recursively calling the update function"
+> "make sure the only way the update function gets called is by the runtime, not by us"
+
+> file system analogy to elm state tree
+> "data without attached methods" -> not OOP -> no parent-child communication
+wrong, if the state is organized as the view (DOM tree), the parent-child relationship in view is inherited by the state which further forces the update function to structure in the same nested way.
+Using "detached methods" doesn't means not OOP.
+Actually, there is an isomorphism between "attached" (OOP) and "detached" (FP) style.
+The approach the lecturer presented by returning additional value to the caller (higher-order update function) is exactly backward (child-parent) propagation of message.
+
 ## 9. Kevin Yank on Elm
 [Elm in Production: Surprises & Pain Points](https://www.youtube.com/watch?v=LZj_1qVURL0)
 
