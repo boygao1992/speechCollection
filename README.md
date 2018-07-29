@@ -501,6 +501,9 @@ Using "detached methods" doesn't means not OOP.
 Actually, there is an isomorphism between "attached" (OOP) and "detached" (FP) style.
 The approach the lecturer presented by returning additional value to the caller (higher-order update function) is exactly backward (child-parent) propagation of message.
 
+
+### 7.[Elm Europe 2017 - Greg Ziegan - Building Reorderable UI in Elm](https://www.youtube.com/watch?v=UiLGIQUGFQg)
+
 ## 9. Kevin Yank on Elm
 [Elm in Production: Surprises & Pain Points](https://www.youtube.com/watch?v=LZj_1qVURL0)
 
@@ -737,6 +740,118 @@ CIFAR10
 
 > 3D surface
 > Poincare Conjecture, 3-sphere is the only simply connected 3-dimensional surface.
+
+
+## 4. MathFoundations - NJ Wildberger
+
+### 252.[A brief history of logic: Stoics and other thinkers](https://www.youtube.com/watch?v=-8IVhNrwNdg)
+
+> Stocism: a school of Greek philosophy founded by Zeno of Citium (334-262 BCE)
+> - a way of living: a formal philosophy, often associated with asceticism, Spartan life style, persevere through difficult time maintaining an equal balance
+> - a way of thinking
+>   - Logic: rhetoric, grammar, thought
+>   - (meta-)Physics: science, universe
+>   - Ethics: the way to obtain happiness was through peace of mind by living in sync with / in accordance with the law of the nature and striving to be virtuous
+
+> Zeno's logic
+> its development of an alternative way of thinking of logic
+> distinct from Aristotle's point of view
+> almost forgotten until recently we found out they had their finger on some actually quite modern ideas
+
+> influenced by the Megarians:
+> - (four-step ascendance to be a wise person) perception => assent => comprehension => knowledge
+> Chrysippus (279-206 BCE), a leader of the Stoic school and highly influential and regarded logician in the Greek times, founded a propositional logic
+
+> Aristotle's logic:
+> All A (subject) are B (predicate)
+> A,B are terms of Aristotle sentences
+> closely associated with grammatical construction in a sentence
+
+> Stoic logic:
+> logical connectives
+> - implication: if p then q
+> - conjunction: both p and q
+> - disjunction: either p or q (xor in modern formalism)
+
+> The five indemonstrable forms
+> 1. `if p then q`; `p`; therefore `q` (Modus Ponens)
+
+```
+p => q
+T T  T (*) (*)
+T F  F
+F T  T (*)
+F T  F (*)
+```
+
+If `p => q` is true, then there are three possibilities, marked above.
+If `p` is true, given `p => q` is true, then the only possibility is `q` is true.
+
+> 2. `if p then q`; `not q`; therefore `not p` (Modus Tollens)
+
+```
+p => q
+T T  T (*)
+T F  F
+F T  T (*)
+F T  F (*) (*)
+```
+
+> 3. `not (p and q)`; `p`; therefore `not q`
+> 4. `either p or q`; `p`; therefore `not q`
+
+```
+p xor q
+T  F  T 
+T  T  F (*) (*)
+F  T  T (*)
+F  F  F
+```
+
+> 5. `either p or q`; `not p`; therefore `q`
+
+```
+p xor q
+T  F  T 
+T  T  F (*)
+F  T  T (*) (*)
+F  F  F
+```
+
+> **The law of excluded middle**
+> Is the statement `p or not p` necessarily true?
+> Aristotle: Yes
+> Stoics: determinism (limited "free will")
+```
+p | not p
+T   F
+F   T
+```
+
+```
+p xor q
+T  F  T 
+T  T  F (*)
+F  T  T (*)
+F  F  F
+```
+
+> The temporal aspect of "truth"
+> truth value varies over time
+
+> The nature of implication `if p then q`
+> The Stoic and modern interpretations agree.
+```
+p => q
+T T  T 
+T F  F
+F T  T 
+F T  F
+```
+
+> The Megarian school of philosophy
+> founded by Euclides of Megara, followed by Ichthyas and Stilpo (4th century BCE)
+> Diodorus: what is possible is limited to what is, or will be true in the future.
 
 # Politics
 
