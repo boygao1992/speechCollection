@@ -679,6 +679,11 @@ CIFAR10
 
 ### 1.2 [Overview part 2](https://www.youtube.com/watch?v=CfoaY2Ybf8M)
 
+### 2.1 [String Diagrams part 1](https://www.youtube.com/watch?v=eOdBTqY3-Og)
+> Poincaré duality
+
+### 2.2 [String Diagrams part 2](https://www.youtube.com/watch?v=lqq9IFSPp7Q)
+
 ## 3. Math History - NJ Wildberger
 
 ### 16.[Differential Geometry | Math History | NJ Wildberger](https://www.youtube.com/watch?v=6xgtMQ7WSzQ)
