@@ -579,6 +579,18 @@ let users inject configurations to modify the view function and state handling l
 
 let users inject translator to translate messages defined in this component to their messages
 
+## 11. [A Categorical View of Computational Effects](https://www.youtube.com/watch?v=6t6bsWVOIzs)
+
+> T-computations
+> - list(X) := finite lists of elements of X
+> - partial(X) := X + {err/bottom}
+> - state(X) := S -> (S,X)
+> - continuation(X) := (X -> R) -> R
+> - non-det(X) := P(X), the set of all subsets of X (non-determinant)
+> - prob-dist(X) := the set of probability functions X -p-> [0,1] so that $\sum_{x \in X} p(x) = 1$ (probabilistic distribution)
+
+> a T-program from A to B is a function A -f-> T(B), from the set of values of type A to the set of T-computations of type B.
+
 # Computer Vision
 
 ## 1.[Stanford CS231n](https://www.youtube.com/playlist?list=PLf7L7Kg8_FNxHATtLwDceyh72QQL9pvpQ)
