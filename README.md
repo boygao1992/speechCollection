@@ -870,6 +870,30 @@ F T  F
 > founded by Euclides of Megara, followed by Ichthyas and Stilpo (4th century BCE)
 > Diodorus: what is possible is limited to what is, or will be true in the future.
 
+
+## 5. Category Theory I - Bartosz Milewski
+
+### 10.2 [Monoid in the category of endofunctors](https://www.youtube.com/watch?v=GmgoPd7VQ9Q)
+
+## 6. Category Theory II - Bartosz Milewski
+
+### 1.2 [Limits](https://www.youtube.com/watch?v=sx8FELiIPg8)
+
+generalization from a categorical Product to Limit
+
+a constant functor from I to C
+
+a functor from I to C
+
+a natural transformation from a constant functor to a functor
+forms a cone (all "walls" commute) (also a hom-set in C)
+
+from any cone to Limit, there is a unique morphism that all "walls" commute
+
+in the category of cones with only these unique morphisms, Limit is the terminal object
+
+TODO: replace sets of commutations by introducing a natural transformation at a higher abstraction level
+
 # Politics
 
 ## 1.[Kishore Mahbubani and Weiwei Zhang - new world order](https://www.bilibili.com/video/av27093393)
