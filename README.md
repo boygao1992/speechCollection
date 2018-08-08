@@ -894,6 +894,72 @@ in the category of cones with only these unique morphisms, Limit is the terminal
 
 TODO: replace sets of commutations by introducing a natural transformation at a higher abstraction level
 
+### 7.1 [Category Theory II 7.1: Comonads](https://www.youtube.com/watch?v=C5oogxdX_Bo)
+
+```haskell
+(=>=) :: (w a -> b) -> (w b -> c) -> (w a -> c)
+
+extract :: w a -> a
+
+extend :: (w a -> b) -> w a -> w b
+extend f = fmap f . duplicate -- fmap :: (w a -> b) -> w (w a) -> w b, for a = w a
+
+duplicate :: w a -> w (w a)
+duplicate = extend id -- extend :: (w a -> w a) -> w a -> w (w a), for b = w a
+
+```
+
+### 7.2 [Category Theory II 7.2: Comonads Categorically and Examples](https://www.youtube.com/watch?v=7XQZJ4TLgX8)
+
+Comonad, philosophically, can be treated as a world (source of information) with a focus (cursor) where the piece of information local to the focus is instantly accessible.
+
+examples
+1. `Product` (isomorphic to `Reader`)
+2. Game of life
+3. Stream
+
+```haskell
+data Stream a = Cons a (Stream a) -- infinite(endless) stream
+
+extract :: Stream a -> a
+extract ( Cons a _ ) = a
+
+tail :: Stream a -> Stream a
+tail ( Cons a as ) = as
+
+duplicate :: Stream a -> Stream(Stream a)
+duplicate steam = Cons stream (duplicate(tail stream))
+```
+
+Comonad is suitable for signal processing e.g. sampling, filtering (by convolution)
+
+moving average of n elements (of a discrete signal)
+```haskell
+sumN :: Num a => Int -> Stream a -> a
+sumN n ( Cons a as )
+  | n > 0     = a + (sumN (n - 1) as)
+  | otherwise = 0
+
+averageN :: Fractional a => Int -> Stream a -> a
+averageN n stream = (sumN n stream) / (fromIntegral n)
+
+movingAverageN :: Fractional a => Int -> Stream a -> Stream a
+-- extend :: (w a -> a) -> w a -> w a
+-- averageN :: w a -> a
+movingAverageN n = extend (avgN n)
+```
+
+From Haskell
+```haskell
+extract :: w a -> a
+duplicate :: w a -> w (w a)
+```
+to category theory
+```
+epsilon (natural transformation) :: W (endofunctor) -> I (identity endofunctor)
+delta (natural transformation) :: W -> W ∘ W
+```
+
 # Politics
 
 ## 1.[Kishore Mahbubani and Weiwei Zhang - new world order](https://www.bilibili.com/video/av27093393)
