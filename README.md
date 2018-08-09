@@ -593,6 +593,114 @@ let users inject translator to translate messages defined in this component to t
 
 
 ## 12. [The Actor Model - Carl Hewitt](https://www.youtube.com/watch?v=7erJ1DV_Tlo)
+
+> Actor is the minimum primitive unit that embodies all 3 essential elements of computation :
+> - processing
+> - storage
+state
+> - communication
+protocol, encryption/guard
+
+> when an actor receive a message, it can
+> 1. create some more actors
+
+like Promise in JS
+
+any computation happening (resolve) or not (exception/reject) in the future
+- a producer which executes this computation
+- a receiver which once receives the message from the producer, will inform all the other actors that subscribed to this receiver by sending a message
+(the receiver stores all the "subscriber" actors' addresses)
+
+
+> 2. send new messages to actors whose addresses it knows
+> 3. designate how it's gonna handle the next message it receives
+
+pass any modified state to the recursive call of itself so the "mutated" state comes into play from the next message
+
+> continuation passing:
+> von normann machine
+> lambda expression (callback function)
+> single-threaded (sequential)
+
+> channels:
+> two-phase commit protocol
+> e.g. process calculi
+> you can implement a channel by an actor with PUT and GET message handling
+> whose state is the buffer
+
+> conceptually, actors process one message at a time
+> optimization in implementation: pipeline messages and process them batch by batch
+
+> protection over the address space
+> - within machine: integrity of addresses is maintained by COR
+> - between machines: guarded by encryption
+
+[Capability-based addressing](https://en.wikipedia.org/wiki/Capability-based_addressing)
+
+[Best-effort delivery](https://en.wikipedia.org/wiki/Best-effort_delivery)
+> Best-effort delivery describes a network service in which the network does not provide any guarantee that data is delivered or that delivery meets any quality of service.
+
+> Cross-machine communication through actors entails best-effort delivery.
+> Best you can do: persist the message at the sender actor, if no response after a predefined time window, resend the message.
+
+> nondeterminism vs indeterminism
+> nondeterministic turing machine: multiple outgoing edges from the same state with the same name/event
+>   - bounded: the number of steps to the terminal state is bounded
+>   - unbounded: otherwise
+the uncertainty comes from the system itself / the inside
+which is algorithmically described
+> indeterminism
+the uncertainty comes from the outside
+which cannot be algorithmically described
+like an oracle
+
+Axion of Choice vs Algorithmic methodology in mathematics
+
+[Actor model](https://en.wikipedia.org/wiki/Actor_model)
+> ## Unbounded nondeterminism controversy
+
+>The first models of computation (e.g., Turing machines, Post productions, the lambda calculus, etc.) were based on mathematics and made use of a global state to represent a computational step (later generalized in [McCarthy and Hayes 1969] and [Dijkstra 1976] see Event orderings versus global state).
+> Each computational step was from one global state of the computation to the next global state. 
+
+> Edsger Dijkstra further developed the nondeterministic global state approach.
+
+> Hewitt argued otherwise: there is no bound that can be placed on how long it takes a computational circuit called an arbiter to settle (see metastability in electronics).
+
+[Arbiter](https://en.wikipedia.org/wiki/Arbiter_(electronics))
+> Arbiters are electronic devices that allocate access to shared resources. 
+
+> The actor model features unbounded nondeterminism which was captured in a mathematical model by Will Clinger using domain theory.
+
+> ## Direct communication and asynchrony
+
+> there is no requirement for a synchronous handshake with the recipient. 
+
+> ## Actor creation plus addresses in messages means variable topology
+
+> For example, an Actor might need to send a message to a recipient Actor from which it later expects to receive a response, but the response will actually be handled by a third Actor component that has been configured to receive and handle the response (for example, a different Actor implementing the Observer pattern).
+> The original Actor could accomplish this by sending a communication that includes the message it wishes to send, along with the address of the third Actor that will handle the response.
+> This third Actor that will handle the response is called the resumption (sometimes also called a continuation or stack frame).
+> When the recipient Actor is ready to send a response, it sends the response message to the resumption Actor address that was included in the original communication. 
+stated above about implementation of Promise in Actor-based system
+
+> ## Inherently concurrent
+
+> ## No requirement on order of message arrival
+
+> ## Locality
+
+> - in processing a message, an Actor can send messages only to addresses that 
+>   - it receives in the message, 
+>   - it already had before it received the message, 
+>   - it creates while processing the message.
+> - there is no simultaneous change in multiple locations.
+
+> In this way it differs from some other models of concurrency, e.g., the **Petri net** model in which tokens are simultaneously removed from multiple locations and placed in other locations. 
+
+> ## Composing Actor systems
+
+## 13. [Scalable Inconsistency Robust Information Systems - Carl Hewitt](https://www.youtube.com/watch?v=_R65RrishcY)
+
 # Computer Vision
 
 ## 1.[Stanford CS231n](https://www.youtube.com/playlist?list=PLf7L7Kg8_FNxHATtLwDceyh72QQL9pvpQ)
