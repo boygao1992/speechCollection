@@ -591,6 +591,8 @@ let users inject translator to translate messages defined in this component to t
 
 > a T-program from A to B is a function A -f-> T(B), from the set of values of type A to the set of T-computations of type B.
 
+
+## 12. [The Actor Model - Carl Hewitt](https://www.youtube.com/watch?v=7erJ1DV_Tlo)
 # Computer Vision
 
 ## 1.[Stanford CS231n](https://www.youtube.com/playlist?list=PLf7L7Kg8_FNxHATtLwDceyh72QQL9pvpQ)
@@ -894,6 +896,27 @@ in the category of cones with only these unique morphisms, Limit is the terminal
 
 TODO: replace sets of commutations by introducing a natural transformation at a higher abstraction level
 
+### 2.1 Limits, Higher order functors
+
+### 2.2 Limits, Naturally
+
+### 3.1 Examples of Limits and Colimits
+
+### 3.2 Free Monoid
+
+### 4.1 Representable Functors
+
+### 4.2 The Yoneda Lemma
+
+### 5.1 Yoneda Embedding
+
+### 5.2 Adjunctions
+
+### 6.1 Examples of Adjunctions
+
+### 6.2 Free-Forgetfu Adjuction, Monads from  Adjunctions
+
+
 ### 7.1 [Category Theory II 7.1: Comonads](https://www.youtube.com/watch?v=C5oogxdX_Bo)
 
 ```haskell
@@ -959,6 +982,17 @@ to category theory
 epsilon (natural transformation) :: W (endofunctor) -> I (identity endofunctor)
 delta (natural transformation) :: W -> W ∘ W
 ```
+
+### 7.2 Comonads Categorically and Examples
+
+### 8.1 F-Algebra, Lambek's lemma
+
+### 8.2 Catamorphisms and Anamorphisms
+
+### 9.1 Lenses
+
+### 9.2 Lenses categorically
+
 
 # Politics
 
