@@ -391,6 +391,69 @@ realCodeTest :: TestMonad String
 realCodeTest = realCode
 ```
 
+```purescript
+realCode :: Aff String
+realCode = do
+  cached <- FS.readFile "/cache"
+  case cached of
+    Nothing -> do
+      content <- HTTP.get "https://purescript.org"
+      FS.writeFile "/cache" content
+      pure content
+    
+    Just content ->
+      pure content
+
+data RealCode a
+  = ReadFile String (Maybe String -> RealCode a)
+  | WriteFile String String (Unit -> RealCode a)
+  | HttpGet String (String -> RealCode a)
+  | Done a
+  
+realCode :: RealCode String
+realCode =
+  ReadFile "/cache" \cached ->
+    case cached of
+      Nothing ->
+        HttpGet "https://purescript.org" \content ->
+          WriteFile "/cache" content \_ ->
+            Done content
+        
+      Just content ->
+        Done content
+        
+realCodeToAff :: forall a. RealCode a -> Aff a
+realCodeToAff = case _ of
+  ReadFile path next -> do
+    content <- FS.readFile path
+    realCodeToAff (next content)
+    
+  WriteFile path content next -> do
+    FS.writeFile path content
+    realCodeToAff (next unit)
+    
+  HttpGet url next -> do
+    content <- HTTP.get url
+    realCodeToAff (next content)
+  
+  Done result ->
+    pure result
+    
+realCodeToIdentity :: forall a. RealCode a -> Identity a
+realCodeToIdentity = case _ of
+  ReadFile path next ->
+    realCodeToIdentity (next (Just "Test content"))
+  
+  WriteFile path content next ->
+    realCodeToIdentity (next unit)
+  
+  HttpGet url next ->
+    realCodeToIdentity (next "<html><title>Purescript.org</title></html>")
+    
+  Done result ->
+    pure result
+```
+
 ## 4.[Front-End Development with PureScript and Thermite](https://www.youtube.com/watch?v=-l2ySRCjihc&t=1233s)
 
 A React wrapper for Purescript
