@@ -191,6 +191,206 @@ This operator-like data structure is a tree / `Free`.
 
 `realCodeToAff`, interpreter, `CoFree`?
 
+
+### De-Assumption Process
+
+```purescript
+sayHello :: List String -> List String
+sayHello [] = []
+sayHello (name : names) =
+  ("Hello, " <> name) : sayHello names
+
+{- step1: parametrize Values by Type -}
+-- "Hello, " :: String
+prependAll :: String -> List String -> List String
+prependAll [] = []
+prependAll prefix (name : names) =
+  (prefix <> name) : prependAll names
+
+sayHello = prependAll "Hello, "
+sayGoodbye = prependAll "Goodbye, "
+
+{- step2: parametrize Function by Function Type -}
+-- given (name :: String), (prefix <> name) :: String -> String
+transform :: (String -> String) -> List String -> List String
+transform editFunc [] = []
+transform editFunc (name : names) =
+  (editFunc name) : transform editFunc names
+  
+prepend :: String -> String
+prepend prefix = prefix <> _
+prependAll :: String -> List String -> List String
+prependAll prefix = transform (prepend prefix)
+
+append :: String -> String
+append suffix = _ <> suffix
+appendAll :: String -> List String -> List String
+appendAll suffix = transform (append suffix)
+
+{- step3: parametrize Type by Kind -}
+transform :: forall a. (a -> a) -> List a -> List a
+transform endoFunction [] = []
+transform endoFunction (x : xs) =
+  (endoFunction x) : transform endoFunction xs
+
+prependAll :: String -> List String -> List String
+appendAll :: String -> List String -> List String
+add :: Int -> Int
+add num = _ + num
+addAll :: Int -> List Int -> List Int
+addAll num = transform (add num)
+negateAll :: List Boolean -> List Boolean
+negateAll = transform not -- not :: Boolean -> Boolean
+
+{- step4: remove unnecessary equality constraints on Kind -}
+transform :: forall a b. (a -> b) -> List a -> List b
+transform f [] = []
+transform f (x : xs) =
+  (f x) : transform f xs
+
+formatAll :: List Number -> List String
+formatAll = transform Number.toString -- toString :: Number -> String
+
+{- step5: parametrize Type (Constructor) Functions by Arrow Kind -}
+transform :: forall f a b. (a -> b) -> f a -> f b
+transform f ??? = ??? -- no information about the structure of `f` and how to extract Values from `f`, thus no implementation can be derived
+
+-- define a Type Function
+-- Transform :: ( (Type -> Type), Type, Type ) -> Type
+type Transform f a b =
+  (a -> b) -> f a -> f b
+  
+-- for each `f`, need a separate implementation
+transformList :: forall a b. Transform List a b
+transformList f [] = []
+transformList f (x : xs) =
+  (f x) : transformList f xs
+
+transformArray :: forall a b. Transform Array a b
+transformTree :: forall a b. Transform Tree a b
+
+-- for each `f`, need to manually inject the corresponding implementation
+addAll :: forall f. Transform f Int Int -> Int -> f Int -> f Int
+addAll transform num = transform (add num)
+negateAll :: forall f. Transform f Boolean Boolean -> f Boolean -> f Boolean
+negateAll = transform not
+formatAll :: forall f. Transform f Number String -> f Number -> f String
+formatAll transform = transform Number.toString
+
+
+{- step6: reduce Type dependency to minimum by Higher-order Type Functions (that return Type Functions) -}
+
+-- automatic currying for Type Functions is missing in purescript's type system
+
+-- define a Higher-order Type Function
+-- Transform :: (Type -> Type) -> ( (Type, Type) -> Type )
+type Transform f =
+  forall a b. (a -> b) -> f a -> f b -- actual Type of a and b can be derived from the injected function (:: a -> b)
+  
+transformList :: Transform List
+transformArray :: Transform Array
+transformTree :: Transform Tree
+
+addAll :: forall f. Transform f -> Int -> f Int -> f Int
+negateAll :: forall f. Transform f -> f Boolean -> f Boolean
+formatAll :: forall f. Transform f -> f Number -> f String
+formatAll transform fa = transform Number.toString fa
+-- actual Type Constructor Function of f can be derived from the injected data (fa :: f Number, e.g. List Number, Tree Number)
+-- but this polymorphic function requires at least manually injecting the Type Constructor Function of f
+
+-- Before
+sayHello :: List String -> List String
+-- After
+sayHello :: Transform List -> List String -> List String
+
+{- step7: Type Class to rescue -}
+
+class Transform f where
+  transform :: forall a b. (a -> b) -> f a -> f b
+  
+instance transformList :: Transform List where
+  transform f [] = []
+  transform f (x : xs) =
+    (f x) : transform f xs
+
+instance transformArray :: Transform Array where ...
+instance transformTree :: Transform Tree where ...
+
+-- The compiler maintains a dictionary of all these implementations and automatically injects the correct implementation when a unique Type Constructor Function of f can be inferred
+
+sayHello :: List String -> List String -- f = List
+sayHello = transform ("Hello ," <> _)
+negateAll :: forall f. Transform f => f Boolean -> f Boolean
+negateAll = transform not
+formatAll :: forall f. Transform f => f Number -> f String
+formatAll = transform Number.toString
+
+-- well-known official name: Functor
+class Functor f where
+  map :: forall a b. (a -> b) -> f a -> f b
+  
+```
+
+```purescript
+flubble :: forall f. Traversable t -> Applicative t -> f String -> f String
+flubble traversableDict applicativeDict xs =
+  applicativeDict.pure
+  applicativeDict."Apply".apply
+  applicativeDict."Apply"."Functor".map -- implementation of map 1
+  traversableDict.traverse
+  traversableDict.sequence
+  traversableDict."Functor".map -- implementation of map 2
+  traversableDict."Foldable".foldr
+  traversableDict."Foldable".foldl
+  traversableDict."Foldable".foldMap
+-- compiler enforces cohesion among instances in the same Type Class hierarchy: map 1 = map 2
+```
+
+```purescript
+class Monad m <= MonadCache m where
+  read :: String -> m (Maybe String)
+  write :: String -> m Unit
+
+class Monad m <= MonadRequest req m | m -> req where -- multiple Type variables while the *Type* of req is the same as the Type variable of the Type Function of m (*Type* -> Type), thus can be derived automatically by specifying a functional dependency `m -> req`
+  request :: req -> m String
+
+requestWithCache ::
+  forall m req.
+  MonadCache m =>
+  MonadRequest req m =>
+  String ->
+  req ->
+  m String
+requestWithCache key req = do
+  cached <- read key
+  case cached of
+    Nothing -> do
+      content <- request req
+      write key content
+      pure content
+    
+    Just content ->
+      pure content
+
+instance monadCacheAppMonad :: MonadCache AppMonad where ...
+instance monadRequestAppMonad :: MonadRequest AppMonad where ...
+instance monadCacheTestMonad :: MonadCache TestMonad where ...
+instance monadRequestTestMonad :: MonadRequest TestMonad where ...
+
+realCode ::
+  forall m.
+  MonadCache m =>
+  MonadRequest String m =>
+  m String
+realCode = requestWithCache "/cache" "https://purescript.org"
+
+realCodeApp :: AppMonad String
+realCodeApp = realCode
+
+realCodeTest :: TestMonad String
+realCodeTest = realCode
+```
+
 ## 4.[Front-End Development with PureScript and Thermite](https://www.youtube.com/watch?v=-l2ySRCjihc&t=1233s)
 
 A React wrapper for Purescript
@@ -700,6 +900,12 @@ stated above about implementation of Promise in Actor-based system
 > ## Composing Actor systems
 
 ## 13. [Scalable Inconsistency Robust Information Systems - Carl Hewitt](https://www.youtube.com/watch?v=_R65RrishcY)
+
+## 14. [Designing Fluid Interfaces](https://www.youtube.com/watch?v=gttSJA-kDmQ)
+
+[Building Fluid Interfaces - Medium](https://medium.com/@nathangitter/building-fluid-interfaces-ios-swift-9732bb934bf5)
+
+[Designing Fluid Interfaces - Mr Why blog](https://mr-why.com/design/designing-fluid-interfaces)
 
 # Computer Vision
 
