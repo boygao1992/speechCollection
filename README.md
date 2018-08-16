@@ -972,9 +972,9 @@ stated above about implementation of Promise in Actor-based system
 
 ## 15. Recursion Scheme
 
-### 1. [Going banana with recursion schemes for fixed point data types](https://www.youtube.com/watch?v=I-5yvVp74Vk)
+### 1. [Going banana with recursion schemes for fixed point data-types](https://www.youtube.com/watch?v=I-5yvVp74Vk)
 
-> Recursive structures: inductively defined data types
+> Recursive structures: inductively defined data-types
 ```purescript
 data List a
   = Cons a (List a)
@@ -1057,7 +1057,7 @@ val exp2: Exp[Exp[Exp[Unit]]] =
     )
 ```
 
-> fix point data types
+> fix point data-types
 ```haskell
 newtype Mu f = Mu { fold :: f (Mu f) }
 ```
@@ -1082,7 +1082,7 @@ val exp2: Fix[Exp] =
 
 > Catamorphism
 
-> need to derive Functor instance for the data type
+> need to derive Functor instance for the data-type
 ```scala
 trait Functor[F[_]] {
   def map[A,B](fa: F[A])(f: A => B): F[B]
@@ -1270,7 +1270,10 @@ foldl f = foldr alg
 newtype Fix f = Fix { unFix :: f (Fix f) }
 ```
 
-> A functor `f` is a data type of kind `* -> *` (Arrow Kind, the kind of unary Type Functions) together with an `fmap` function
+> A functor `f` is a data-type of kind `* -> *` (Arrow Kind, the kind of unary Type Functions) together with an `fmap` function
+
+`Fix` is also a data-type of kind `* -> *`, thus by nested alternating:
+`Fix f ~= f(Fix(f(Fix(f(...))))) ~= f(f(f(...))) ~= (f . f . f(...) )`
 
 `Fix f` is the least fixed point of endo Type Function / EndoFunctor `f :: * -> *`
 
@@ -1287,47 +1290,59 @@ fix f =
 take `List` as an example
 ```haskell
 (:) :: a -> [a] -> [a]
-(a : ) :: [a] -> [a] -- endofunction
-(a : a :) :: [a] -> [a]
-(a : a : a :) :: [a] -> [a]
+(a : _) :: [a] -> [a] -- endofunction
+(a : _) . (a : _) = (a : a : _) :: [a] -> [a] -- function composition
+(a : _) . (a : _) . (a : _) = (a : a : a : _) :: [a] -> [a]
+-- it's possible to compose infinite number of endofunctions of the same type
+-- because endofunctions with composition `(.)` form a monoid
 
 -- derive `sequence` based on this special property of endofunction
 
-sequance :: Traversable t => Applicative m => t (m a) -> m (t a)
--- [Maybe a] -> Maybe [a]
-{-
-  0. Just(1) : Just(2) : Just(3) : []
-  1. fmap (:) Just(1), Just(2) : Just(3) : []
-  2. Just( 1 : ), Just(2) : Just(3) : [] 
-  3. Just( 1 : ), fmap (:) Just(2), Just(3) : []
-  4. Just( 1 : ), Just( 2 : ), Just(3) : []
-               -- (<*>) :: Functor f => f (a -> b) -> f a -> f b
-  5. Just( 1 : ) <*> Just( 2 : ), Just(3) : []
-  6. Just( 1 : 2 : ), Just(3) : []
-  7. Just( 1 : 2 : ), fmap (:) Just(3), []
-  8. Just( 1 : 2 : ), Just ( 3 : ), []
-  9. Just( 1 : 2 : ) <*> Just( 3 : ), []
-  10. Just( 1 : 2 : 3 : ), []
-  11. Just( 1 : 2 : 3 : ), pure []
-  12. Just( 1 : 2 : 3 : ), Just([])
-  13. Just( 1 : 2 : 3 : ) <*> Just([])
-  14. Just( 1 : 2 : 3 : [])
- -}
+sequence :: Traversable t => Applicative m => t (m a) -> m (t a)
+-- original implementation of `sequence`
+   sequence :: Traversable List => Applicative Maybe => [Maybe a] -> Maybe [a]
+0. sequence $ Just(1) : Just(2) : []
+        (:) :: Int -> [Int] -> [Int]
+1. fmap (:) Just(1) <*> sequence (Just(2) : [])
+       (1 : _) :: [Int] -> [Int]
+              (<*>) :: Functor f => f (a -> b) -> f a -> f b
+            -- left-associative
+2. Just(1 : _) <*> (fmap (:) Just(2) <*> sequence [])
+3. Just(1 : _) <*> (Just(2 : _) <*> (pure []))
+4. Just(1 : _) <*> (Just(2 : _) <*> Just([]))
+5. Just(1 : _) <*> Just(2 : [])
+6. Just(1 : 2 : [])
+
+-- use endofunction composition
+-- disclaimer: not formal
+1. Just(1 : _) <*> Just(2 : _)  <*> Just([])
+2. Just(1 : 2 : _) <*> Just([])
+3. Just(1 : 2 : [])
 
 data ListF a r
   = Cons a r
   | Nil
+  
+instance Functor (ListF a) where
+  fmap f Nil = Nil
+  fmap f (Cons x xs) = Cons x (f xs)
 
 forall a r. ListF a r :: Type -> Type -> Type
-forall r. ListF a r :: Type -> Type -- endofunctor
-forall r. ListF a (ListF a r) :: Type -> Type
+(given a.) forall r. ListF a r :: Type -> Type -- endofunctor
+                -- (.) , functor composition
+forall r. (ListF a) . (ListF a) r = forall r. ListF a (ListF a r) :: Type -> Type
 forall r. ListF a (ListF a (ListF a (... (ListF a r) ...))) :: Type -> Type
+-- similar to endofunction
 
+data NatF r
+  = Zero
+  | Succ r
+  deriving Functor
 ```
 
 > Limitations
-> - The set of data types that can be represented by means of `Fix` is limited to regular data types
-> - Nested data types and mutually recursive data types require higher-order approaches
+> - The set of data-types that can be represented by means of `Fix` is limited to regular data-types
+> - Nested data-types and mutually recursive data-types require higher-order approaches
 
 [Data.Functor.Fixedpoint](http://hackage.haskell.org/package/unification-fd-0.10.0.1/docs/Data-Functor-Fixedpoint.html)
 > For more on the utility of two-level recursive types, see:
@@ -1335,6 +1350,87 @@ forall r. ListF a (ListF a (ListF a (... (ListF a r) ...))) :: Type -> Type
 > - Tim Sheard & Emir Pasalic (2004) Two-Level Types and Parameterized Modules. JFP 14(5): 547--587. This is an expanded version of Sheard (2001) with new examples.
 > - Wouter Swierstra (2008) Data types a la carte, Functional Pearl. JFP 18: 423--436.
 
+> Data-type generic programming
+> - allows as to parametrize functions on the structure, or shape, of a data-type
+> - useful for large complex data-types, where boilerplate traversal code often dominates, especially when updating a small subset of constructors
+> - for recursion schemes, we can capture the pattern as a standalone combinator
+
+> Catamorhpisms
+> - we would like to write `foldr` once for all data-types
+> - category theory shows us how to define its data-type generically for a functor fixed-point
+```haskell
+cata :: Functor f => (f a -> a) -> Fix f -> a
+cata alg = alg . fmap (cata alg) . unFix
+```
+
+> Commutative diagram for Catamorphism
+```
+f(Fix x) --fmap(cata alg)--> f a
+  |                           |
+  |                           |
+ Fix                         alg
+  |                           |
+  v                           v
+Fix f ----cata alg----------> a
+```
+
+> The catamorphism-fusion law
+> can be used to transform the composition of a function with a catamorphism into single catamorphism,
+> eliminating intermediate data structures.
+
+```haskell
+cata :: Functor f => (f a -> a) -> Fix f -> a
+p :: Functor f => f a -> a
+q :: Functor f => f b -> b
+r :: a -> b
+
+if
+  r . p :: f a -> b
+              fmap r :: f a -> f b
+          q . fmap r :: f a -> b
+  r . p = q . fmap r
+then
+      cata p :: Fix f -> a
+  r . cata p :: Fix f -> b
+               cata q :: Fix f -> b
+  r . cata p = cata q
+```
+
+> Example: a simple expression language
+```haskell
+type Id = String
+
+-- pattern functor ExprF
+-- represents the structure of type Expr
+data ExprF r
+  = Const Int
+  | Var Id
+  | Add r r
+  | Mul r r
+  | IfNeg r r r
+    deriving ( Show, Eq, Ord, Functor, Foldable, Traversable )
+
+newtype Fix f = Fix { unFix :: f (Fix f) }
+
+-- the isomorphism between a data-type Expr and its pattern functor type ExprF
+-- is witnessed by the functions `Fix` and `unFix`
+type Expr = Fix ExprF
+```
+
+> Composing Algebras
+
+> The catamorphism compose law
+
+similar to CoYoneda
+`map` over the same structure multiple times, you can compose the functions and then do one single `map`
+
+```haskell
+p :: f a -> a
+r :: g a -> f a
+
+               Fix . r :: 
+cata p . cata (Fix . r) = cata (p . r)
+```
 
 # Computer Vision
 
