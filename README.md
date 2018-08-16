@@ -970,6 +970,218 @@ stated above about implementation of Promise in Actor-based system
 
 [Designing Fluid Interfaces - Mr Why blog](https://mr-why.com/design/designing-fluid-interfaces)
 
+## 15. Recursion Scheme
+
+### 1. [Going banana with recursion schemes for fixed point data types](https://www.youtube.com/watch?v=I-5yvVp74Vk)
+
+> Recursive structures: inductively defined data types
+```purescript
+data List a
+  = Cons a (List a)
+  | Nil
+  
+data BTree a
+  = Node a (BTree a) (BTree a)
+  | Leaf a
+```
+> e.g. file systems, 3d graphics (scene graph), databases
+
+```haskell
+data Exp
+  = IntVal Int
+  | DecVal Double
+  | Sum Exp Exp
+  | Multiply Exp Exp
+  | Divide Exp Exp
+  | Square Exp
+```
+
+```scala
+sealed trait Exp
+final case class IntVal(v: Int) extends Exp
+final case class DecVal(v: Double) extends Exp
+final case class Sum(exp1: Exp, exp2: Exp) extends Exp
+final case class Multiply(exp1: Exp, exp2: Exp) extends Exp
+final case class Divide(exp1: Exp, exp2: Exp) extends Exp
+final case class Square(exp: Exp) extends Exp
+
+val evaluate: Exp => Double = {
+  case IntVal(v) => v.toDouble
+  case DecVal(v) => v
+  case Sum(exp1, exp2) => evaluate(exp1) + evaluate(exp2)
+  case Multiply(exp1, exp2) => evaluate(exp1) * evaluate(exp2)
+  case Square(exp)
+    =>
+      val v = evaluate(exp)
+      v * v
+  case Divide(exp1, exp2) => evaluate(exp1) / evaluate(exp2)
+}
+```
+
+> separation of concern:
+> 1. recursively traversing the structure
+> 2. evaluation at nodes
+```
+sealed trait Exp[A]
+final case class IntVal[A](v: Int) extends Exp[A]
+final case class DecVal[A](v: Double) extends Exp[A]
+final case class Sum[A](exp1: A, exp2: A) extends Exp[A]
+final case class Multiply[A](exp1: A, exp2: A) extends Exp[A]
+final case class Divide[A](exp1: A, exp2: A) extends Exp[A]
+final case class Square[A](exp: A) extends Exp[A]
+
+val evaluate: Exp[Double] => Double = {
+  case IntVal(v) => v.toDouble
+  case DecVal(v) => v
+  case Sum(exp1, exp2) => exp1 + exp2
+  case Multiply(exp1, exp2) => exp1 * exp2
+  case Square(exp1, exp2) => exp * exp
+  case Divide(exp1, exp2) => exp1 / exp2
+}
+
+// 10 + 5
+val exp1: Exp[Exp[Unit]] =
+  Sum[Exp[Unit]]
+    ( InvVal[Unit](10)
+    , IntVal[Unit](5)
+    )
+
+// 5.2 / (10 + 5)
+val exp2: Exp[Exp[Exp[Unit]]] =
+  Divide[Exp[Exp[Unit]]]
+    ( DecVal[Exp[Unit]](5,2)
+    , Sum[Exp[Unit]]
+        ( InvVal[Unit](10)
+        , IntVal[Unit](5)
+        )
+    )
+```
+
+> fix point data types
+```haskell
+newtype Mu f = Mu { fold :: f (Mu f) }
+```
+```scala
+case class Fix[F[_]](unFix: F[Fix[F]])
+
+val exp1: Fix[Exp] =
+  Fix( Sum[Fix[Exp]]
+        ( Fix(IntVal[Fix[Exp]](10))
+        , Fix(IntVal[Fix[Exp]](5))
+        ))
+  
+val exp2: Fix[Exp] =
+  Fxp(Divide[Fix[Exp]]
+        ( Fix(DecVal[Fix[Exp]](5.2))
+        , Fix(Sum[Fix[Exp]]
+                ( Fix(IntVal[Fix[Exp]](10))
+                , Fix(IntVal[Fix[Exp]](5))
+                ))
+        ))
+```
+
+> Catamorphism
+
+> need to derive Functor instance for the data type
+```scala
+trait Functor[F[_]] {
+  def map[A,B](fa: F[A])(f: A => B): F[B]
+}
+
+implicit val functor: Functor[Exp] = new Functor[Exp] {
+  def map[A,B](exp: Exp[A])(f: A => B): Exp[B] = exp match {
+    case Sum(a1, a2) => Sum(f(a1), f(a2))
+    case Multiply(a1, a2) => Multiply(f(a1), f(a2))
+    case Divide(a1, a2) => Divide(f(a1), f(a2))
+    case Square(a) => Square(f(a))
+    case IntVal(v) => IntVal(v)
+    case DecVal(v) => DecVal(v)
+  }
+}
+```
+
+> F-algebra
+```scala
+type Algebra[F[_], A] = F[A] => A
+
+val evaluate: Algebra[Exp, Double] = { // Exp[Double] => Double
+  case IntVal(v) => v.toDouble
+  case DecVal(v) => v
+  case Sum(a1, a2) => a1 + a2
+  case Multiply(a1, a2) => a1 * a2
+  case Square(a) => a * a
+  case Divide(a1, a2) => a1 / a2
+}
+
+exp2.cata(evaluate)
+```
+
+```scala
+val optimize: Algebra[Exp, Fix[Exp]] = { // Exp[Fix[Exp]] => Fix[Exp]
+  case Multiply(Fix(a1), Fix(a2))
+    if (a1 == a2) => Fix(Square(Fix(a1))) // How to derive (==) for Exp?
+  case other => Fix(other)
+}
+
+val aTimesAExp: Fix[Exp] =
+  Fix(Multiply
+    ( Fix(Sum
+      ( Fix(IntVal(10))
+      , Fix(IntVal(20))
+      ))
+    , Fix(Sum
+      ( Fix(IntVal(10))
+      , Fix(IntVal(20))
+      ))
+    ))
+
+aTimesAExp.cata(optimize)
+/*
+  Fix(Square(
+    Fix(Sum
+      ( Fix(IntVal(10))
+      , Fix(IntVal(20))
+      ))
+  ))
+ */
+```
+
+> Anamorphism: dual of Catamorphism
+> constructs a structure from a value
+> `Algebra[F[_], A]` vs `Coalgebra[F[_], A]`
+```scala
+type Coalgebra[F[_], A] = A => F[A]
+
+// factorize a Int into multiples of 2
+val divisors: Coalgebra[Exp, Int] = { // Int => Exp[Int]
+  case n if (n % 2 == 0 && n != 2) => Multiply(2, n / 2)
+  case n => IntVal(n)
+}
+
+12.ana[Fix, Exp](divisors)
+/*
+  Fix(Multiply
+    ( Fix(IntVal(2))
+    , Fix(Multiply
+      ( Fix(IntVal(2))
+      , Fix(IntVal(3))
+      ))
+    ))
+ */
+```
+
+> Hylomorphism
+> constructs from a value and then deconstructs the structure into a value
+> Anamorphism followed by Catamorphism
+> evaluated in a single pass
+
+```scala
+val divisors: Coalgebra[Exp, Int] = { ... } // Int => Exp[Int]
+val evaluate: Algebra[Exp, Double] = { ... } // Exp[Double] => Double
+
+n.hylo(evaluate, divisors)
+```
+
 # Computer Vision
 
 ## 1.[Stanford CS231n](https://www.youtube.com/playlist?list=PLf7L7Kg8_FNxHATtLwDceyh72QQL9pvpQ)
