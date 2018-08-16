@@ -1182,6 +1182,159 @@ val evaluate: Algebra[Exp, Double] = { ... } // Exp[Double] => Double
 n.hylo(evaluate, divisors)
 ```
 
+### 2.[Recursion Schemes - London Haskell](https://www.youtube.com/watch?v=Zw9KeP3OzpU)
+
+> A catamorphism (cata meaning "downwards") is a generalization of the concept of a `fold`
+> models the fundamental pattern of (internal) iteration
+> e.g.
+> - for a `List`, it describes processing from the right
+> - for a `Tree`, it describes a bottom-up traversal, i.e. children first
+
+> `foldr` from the Haskell Prelude is a specialized catamorphism:
+```haskell
+foldr :: (a -> b -> b) -> b -> [a] -> [b]
+foldr f z [] = z
+foldr f z (x : xs) = x `f` foldr f z xs
+```
+
+> can be expressed as a single F-algebra `f b -> b` over a functor `f` and carrier `b`
+```haskell
+foldr :: (Maybe (a, b) -> b) -> [a] -> b
+foldr alg [] = alg $ Nothing
+foldr alg (x : xs) = alg $ Just (x, foldr alg xs)
+```
+
+> could factor out the `List a` to `Maybe (a, List a)` isomorphism as `unList`
+```haskell
+foldr :: (Maybe (a, b) -> b) -> [a] -> b
+-- (***) :: (a -> a) -> ([a] -> b) -> (a, [a]) -> (a, b)
+-- id *** foldr alg :: (a, [a]) -> (a, b)
+-- fmap (id *** foldr alg) :: Maybe (a, [a]) -> Maybe (a, b)
+-- alg :: Maybe(a, b) -> b
+foldr alg = alg . fmap (id *** foldr alg) . unList
+  where
+    unList :: [a] -> Maybe (a, [a])
+    unList [] = Nothing
+    unList (x : xs) = Just (x, xs)
+
+length :: [a] -> Int
+-- b = Int
+length = foldr alg
+  where
+    alg :: Maybe (a, Int) -> Int
+    alg Nothing = 0
+    alg (Just (_, xs)) = xs + 1
+```
+
+```haskell
+data Branch a
+  = Just (a, Branch a)
+  | Nothing
+
+newtype Node a
+  = Node a -- Identity Functor
+```
+
+> commutative diagram
+```
+Maybe (a,[a]) --fmap(id *** foldr alg)--> Maybe (a,b)
+  ^                                       |
+  |                                       |
+  unList                                  alg
+  |                                       |
+  |                                       v
+ [a] -----------foldr alg---------------> b
+```
+
+> can write a left `fold` using an algebra with a higher-order carrier `b -> b`
+```haskell
+foldl :: forall a b. (b -> a -> b) -> [a] -> b -> b
+-- foldr :: (Maybe (a, b) -> b) -> [a] -> b
+-- b = (b -> b)
+-- foldr :: (Maybe (a, b -> b) -> (b -> b)) -> [a] -> (b -> b)
+-- fmap (id *** foldr alg) :: Maybe (a, [a]) -> Maybe (a, b -> b)
+foldl f = foldr alg
+  where
+    alg :: Maybe (a, b -> b) -> (b -> b)
+    alg Nothing = id
+    alg (Just (x, xs)) = \r -> xs (f r x)
+```
+
+> Fixed points of Functors
+> an idea from category theory which gives:
+> - data-type generic functions
+> - compositional data
+
+```haskell
+--| the least fixpoint of functor f
+newtype Fix f = Fix { unFix :: f (Fix f) }
+```
+
+> A functor `f` is a data type of kind `* -> *` (Arrow Kind, the kind of unary Type Functions) together with an `fmap` function
+
+`Fix f` is the least fixed point of endo Type Function / EndoFunctor `f :: * -> *`
+
+`fix f` is the least fixed point of endo function `f :: a -> a`
+```haskell
+fix :: (a -> a) -> a
+fix f =
+  let
+    x = f x
+  in
+    x
+```
+
+take `List` as an example
+```haskell
+(:) :: a -> [a] -> [a]
+(a : ) :: [a] -> [a] -- endofunction
+(a : a :) :: [a] -> [a]
+(a : a : a :) :: [a] -> [a]
+
+-- derive `sequence` based on this special property of endofunction
+
+sequance :: Traversable t => Applicative m => t (m a) -> m (t a)
+-- [Maybe a] -> Maybe [a]
+{-
+  0. Just(1) : Just(2) : Just(3) : []
+  1. fmap (:) Just(1), Just(2) : Just(3) : []
+  2. Just( 1 : ), Just(2) : Just(3) : [] 
+  3. Just( 1 : ), fmap (:) Just(2), Just(3) : []
+  4. Just( 1 : ), Just( 2 : ), Just(3) : []
+               -- (<*>) :: Functor f => f (a -> b) -> f a -> f b
+  5. Just( 1 : ) <*> Just( 2 : ), Just(3) : []
+  6. Just( 1 : 2 : ), Just(3) : []
+  7. Just( 1 : 2 : ), fmap (:) Just(3), []
+  8. Just( 1 : 2 : ), Just ( 3 : ), []
+  9. Just( 1 : 2 : ) <*> Just( 3 : ), []
+  10. Just( 1 : 2 : 3 : ), []
+  11. Just( 1 : 2 : 3 : ), pure []
+  12. Just( 1 : 2 : 3 : ), Just([])
+  13. Just( 1 : 2 : 3 : ) <*> Just([])
+  14. Just( 1 : 2 : 3 : [])
+ -}
+
+data ListF a r
+  = Cons a r
+  | Nil
+
+forall a r. ListF a r :: Type -> Type -> Type
+forall r. ListF a r :: Type -> Type -- endofunctor
+forall r. ListF a (ListF a r) :: Type -> Type
+forall r. ListF a (ListF a (ListF a (... (ListF a r) ...))) :: Type -> Type
+
+```
+
+> Limitations
+> - The set of data types that can be represented by means of `Fix` is limited to regular data types
+> - Nested data types and mutually recursive data types require higher-order approaches
+
+[Data.Functor.Fixedpoint](http://hackage.haskell.org/package/unification-fd-0.10.0.1/docs/Data-Functor-Fixedpoint.html)
+> For more on the utility of two-level recursive types, see:
+> - Tim Sheard (2001) Generic Unification via Two-Level Types and Paramterized Modules, Functional Pearl, ICFP.
+> - Tim Sheard & Emir Pasalic (2004) Two-Level Types and Parameterized Modules. JFP 14(5): 547--587. This is an expanded version of Sheard (2001) with new examples.
+> - Wouter Swierstra (2008) Data types a la carte, Functional Pearl. JFP 18: 423--436.
+
 # Computer Vision
 
 ## 1.[Stanford CS231n](https://www.youtube.com/playlist?list=PLf7L7Kg8_FNxHATtLwDceyh72QQL9pvpQ)
