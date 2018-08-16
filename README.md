@@ -1335,6 +1335,7 @@ forall r. ListF a (ListF a (ListF a (... (ListF a r) ...))) :: Type -> Type
 > - Tim Sheard & Emir Pasalic (2004) Two-Level Types and Parameterized Modules. JFP 14(5): 547--587. This is an expanded version of Sheard (2001) with new examples.
 > - Wouter Swierstra (2008) Data types a la carte, Functional Pearl. JFP 18: 423--436.
 
+
 # Computer Vision
 
 ## 1.[Stanford CS231n](https://www.youtube.com/playlist?list=PLf7L7Kg8_FNxHATtLwDceyh72QQL9pvpQ)
