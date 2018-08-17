@@ -1184,6 +1184,7 @@ n.hylo(evaluate, divisors)
 
 ### 2.[Recursion Schemes - London Haskell](https://www.youtube.com/watch?v=Zw9KeP3OzpU)
 
+#### Catamorphisms
 > A catamorphism (cata meaning "downwards") is a generalization of the concept of a `fold`
 > models the fundamental pattern of (internal) iteration
 > e.g.
@@ -1320,8 +1321,8 @@ sequence :: Traversable t => Applicative m => t (m a) -> m (t a)
 3. Just(1 : 2 : [])
 
 data ListF a r
-  = Cons a r
-  | Nil
+  = C a r
+  | N
   
 instance Functor (ListF a) where
   fmap f Nil = Nil
@@ -1415,21 +1416,325 @@ newtype Fix f = Fix { unFix :: f (Fix f) }
 -- the isomorphism between a data-type Expr and its pattern functor type ExprF
 -- is witnessed by the functions `Fix` and `unFix`
 type Expr = Fix ExprF
+
+type Env = Map Id Int
+
+eval :: Env -> Expr -> Maybe Int
+eval env = cata (evalAlg env)
+
+evalAlg :: Env -> ExprF (Maybe Int) -> Maybe Int -- carrier b = Maybe Int
+evalAlg env = alg where
+  alg (Const c)     = pure c
+  alg (Val i)       = M.lookup i env -- Maybe
+  alg (Add x y)     = (+) <$> x <*> y
+  alg (Mul x y)     = (*) <$> x <*> y
+  alg (IfNeg t x y) = t >>= bool x y . (<0)
+  
+textEnv :: Env
+textEnv = M.fromList [("a",1), ("b",3)] -- Map Id Int
+
+e1 :: Expr
+-- \a b -> (If (1 * a < 0) then (b + 0) else (b + 2)) * 3
+e1 =
+  Fix(Mul
+    (Fix(IfNeg
+      (Fix(Mul
+        (Fix (Const 1))
+        (Fix (Var "a"))
+      ))
+      (Fix(Add
+        (Fix(Var "b"))
+        (Fix(Const 0))
+      ))
+      (Fix(Add
+        (Fix(Var "b"))
+        (Fix(Const 2))
+      ))
+    ))
+    (Fix (Const 3)))
+
+-- eval testEnv e1 => Just 9
 ```
 
 > Composing Algebras
+> Example: an optimization pipeline
+```haskell
+optAdd :: ExprF Expr -> Expr
+optMul :: ExprF Expr -> Expr
 
-> The catamorphism compose law
+optimizeSlow :: Expr -> Expr
+               cata :: Functor f => (f a -> a) -> Fix f -> a
+               cata optAdd :: Fix ExprF -> Expr
+               Fix ExprF = Expr
+               cata optAdd :: Expr -> Expr
+                             cata optMul :: Expr -> Expr
+optimizeSlow = cata optAdd . cata optMul
+```
+> We need an algebra composition operator that gives us **short-cut fusion**:
+```haskell
+cata p . cata q = cata (p `comp` q)
+```
+> For the special case:
+```haskell
+p :: f a -> a
+q :: g (Fix f) -> Fix f -- carrier b = Fix f
+newtype Fix f = Fix { unFix :: f (Fix f) }
+
+y :: g (Fix f) -> Fix f
+unFix :: Fix f -> f (Fix f)
+x :: f (Fix f) -> Fix f
+comp x y = x . unFix . y
+```
 
 similar to CoYoneda
 `map` over the same structure multiple times, you can compose the functions and then do one single `map`
 
+> The catamorphism compose law
+
 ```haskell
+cata :: Functor f => (f a -> a) -> Fix f -> a
 p :: f a -> a
 r :: g a -> f a
 
-               Fix . r :: 
+     p :: f (Fix f) -> Fix f -- carrier a = Fix f
+cata p :: Fix f -> Fix f
+                     r :: g (Fix f) -> f (Fix f)
+               Fix . r :: g (Fix f) -> Fix f
+cata p . cata (Fix . r) :: g (Fix f) -> Fix f
 cata p . cata (Fix . r) = cata (p . r)
+                                p . r :: g (Fix f) -> Fix f -- a = Fix f
+                          cata (p . r) :: Fix f -> Fix f
+```
+
+> Combining Algebras
+> Given the following two algebras, 
+```haskell
+p :: f a -> a
+q :: f b -> b
+```
+> we want an algebra of type `f (a, b) -> (a, b)`
+two algebras working in parallel
+
+> banana-split theorem:
+```haskell
+      (&&&) :: (a -> b) -> (a -> c) -> a -> (b, c)
+cata p :: Fix f -> a
+           cata q :: Fix f -> b
+cata p &&& cata q :: Fix f -> (a, b)
+cata p &&& cata q =
+             fmap fst :: f (a, b) -> f a
+         p . fmap fst :: f (a, b) -> a
+                              fmap snd :: f (a, b) -> f b
+                          q . fmap snd :: f (a, b) -> b
+         p . fmap fst &&& q . fmap snd :: f (a, b) -> (a, b)
+  cata ( p . fmap fst &&& q . fmap snd ) :: Fix f -> (a, b)
+  cata ( p . fmap fst &&& q . fmap snd )
+```
+> rewrite the **Product** of two algebra using `funzip`
+```haskell
+(***) :: (a -> b) -> (c -> d) -> (a, c) -> (b, d)
+(f *** g) (a, c) = (f a, g c)
+funzip :: Functor f => f (a, b) -> (f a, f b)
+funzip = fmap fst &&& fmap snd
+
+-- p `algProd` q = p . fmap fst && q . fmap snd
+algProd :: Functor f => (f a -> a) -> (f b -> b) -> f (a, b) -> (a, b)
+algProd f g = (f *** g) . funzip
+```
+> we can also combine two algebras over different functors
+> but the same carrier type into a **CoProduct**
+```haskell
+(|||) :: (a -> c) -> (b -> c) -> Either a b -> c
+(f ||| g) e =
+  case e of
+    Left a ->
+      f a
+    Right b ->
+      g b
+
+algCoprod :: Functor f => Functor g => (f a -> a) -> (g a -> a) -> Either (f a) (g a) -> a
+algCoprod = (|||)
+```
+
+> Working with fixed data-types
+```haskell
+class Functor f => Fixpoint f t | t -> f where -- t = Fix f, unFix t = f(Fix f)
+  inF :: f t -> t -- f(Fix f) -> Fix f
+  outF :: t -> f t -- Fix f -> f(Fix f)
+  
+-- before
+cata :: Functor f => (f a -> a) -> Fix f -> a
+cata alg = alg . fmap (cata alg) . unFix
+
+-- now
+cata :: Fixpoint f t => (f a -> a) -> t -> a
+cata alg = alg . fmap (cata alg) . outF
+
+newtype Fix f = Fix { unFix :: f (Fix f) }
+
+instance Functor f => Fixpoint f (Fix f) where
+  inF = Fix
+  outF = unFix
+
+data ListF a r
+  = C a r
+  | N
+  
+instance Fixpoint (ListF a) [a] where
+  inF :: ListF a [a] -> [a]
+  inF N        = []
+  inF (C x xs) = x : xs
+
+  outF :: [a] -> List a [a]
+  outF []       = N
+  outF (x : xs) = C x xs
+  
+data NatF r
+  = Zero
+  | Succ r
+  deriving Functor
+
+instance Fixpoint NatF Integer where
+  inF :: NatF Integer -> Integer
+  inF Zero     = 0
+  inF (Succ n) = n + 1
+  
+  outF :: Integer -> NatF Integer
+  outF n | n > 0     = Succ (n - 1)
+         | otherwise = Zero
+```
+
+#### Anamorphisms
+> An anamorphism (ana meaning "upwards") is generalization of the concept of an `unfold`
+> - The **corecursive** dual of catamorphisms
+> - produces `Stream` and other regular structures from a seed
+> - `ana` for `List` is `unfoldr`, view patterns help see the duality
+
+```haskell
+foldr :: (Maybe (a, b) -> b) -> [a] -> b
+foldr f [] = f $ Nothing
+foldr f (x : xs) = f $ Just (x, foldr f xs)
+
+unfoldr :: (b -> Maybe (a, b)) -> b -> [a]
+unfoldr f (f -> Nothing) = []
+unfoldr f (f -> Just (x, unfoldr f -> xs)) = x : xs
+```
+
+> Example: `replicate` the supplied seed by a given number
+```haskell
+replicate :: Int -> a -> [a]
+replicate n x = unfoldr c n where
+  c 0 = Nothing
+  c n = Just (x, n-1)
+  
+-- replicate 4 '*' => "****"
+```
+
+> Example: split a list using a predicate
+[Data.Text](http://hackage.haskell.org/package/text-1.2.3.0/docs/Data-Text.html)
+
+```haskell
+drop :: Int -> Text -> Text
+-- O(n) drop n, applied to a Text, returns the suffix of the Text after the first n characters, or the empty Text if n is greater than the length of the Text. Subject to fusion.
+
+break :: (Char -> Bool) -> Text -> (Text, Text) 
+-- O(n) break is like span, but the prefix returned is over elements that fail the predicate p.
+
+linesBy :: (t -> Bool) -> [t] -> [[t]]
+linesBy p = unfoldr c where
+  c [] = Nothing
+  c xs = Just $ second (drop 1) $ break p xs
+  
+-- linesBy (== ',') "foo,bar,baz" => ["foo", "bar", "baz"]
+```
+
+> Example: merging two ordered lists
+```haskell
+mergeLists :: forall a. Ord a => [a] -> [a] -> [a]
+mergeLists = curry $ unfoldr c where
+  c :: ([a], [a]) -> Maybe (a, ([a], [a]))
+  c ([], []) = Nothing
+  c ([], y : ys) = Just (y, ([], ys))
+  c (x : xs, []) = Just (x, (xs, []))
+  c (x : xs, y : ys) | x <= y = Just (x, (xs, y : ys))
+                     | x > y  = Just (y, (x : xs, ys))
+
+-- mergeLists [1,4] [2,3,5] => [1,2,3,4,5]
+```
+
+> Corecursion
+> An anamorphism is an example of corecursion, the dual of recursion.
+> Corecursion produces (potentially infinite) codata,
+> whereas oridinary recursion consumes (necessarily finite) data.
+> - using `cata` and `ana` only, our program is guaranteed to terminate
+> - However, not every program can be written in terms of just `cata` or `ana`
+
+> There is no enforced distinction between data and codata in Haskell,
+> so we can make use of `Fix` again:
+```haskell
+--| anamorphisms
+ana :: Functor f => (a -> f a) -> a -> Fix f
+ana coalg = Fix . fmap (ana coalg) .coalg
+
+-- for comparison
+cata :: Functor f => (f a -> a) -> Fix f -> a
+cata alg = alg . fmap (cata alg) . unFix
+```
+
+> However, it is often useful to try to enforce this distinction,
+> especially when working with streams.
+```haskell
+--| The greatest fixpoint of functor f
+newtype Cofix f = Cofix { unCofix :: f (Cofix f) }
+
+-- for comparison
+newtype Fix f = Fix { unFix :: f (Fix f) }
+```
+> an alternative anamorphism typed for codata
+```haskell
+ana' :: Functor f => (a -> f a) -> a -> Cofix f
+ana' coalg = Cofix . fmap (ana' coalg) . coalg
+```
+> Commutative diagram
+```
+f (Cofix f) <--fmap(ana coalg)-- f a
+   ^                              ^
+   |                              |
+ unFix                          coalg
+   |                              |
+   |                              |
+Cofix f <------ana coalg----------a
+```
+
+> Example : coinductive `Stream`
+```haskell
+data StreamF a r = S a r deriving Show
+type Stream a = Cofix (StreamF a)
+
+instance Functor (StreamF a) where
+  fmap f (S x xs) = S x (f xs)
+  
+--| Stream constructor
+consS :: a -> Stream a -> Stream a
+consS x xs = Cofix (S x xs)
+
+--| Stream deconstructors
+headS :: Stream a -> a
+headS (unCofix -> (S x _)) = x
+tailS :: Stream a -> Stream a
+tailS (unCofix -> (S _ xs)) = xs
+```
+
+> the function `iterateS` generates an infinite stream using the supplied iterator and seed
+```haskell
+iterateS :: (a -> a) -> a -> Stream a
+iterateS f = ana' c where
+  c x = S x (f x)
+
+s1 :: Stream Int
+s1 = iterateS (+1) 1
+
+-- takeS 6 $ s1 => [1,2,3,4,5,6]
 ```
 
 # Computer Vision
