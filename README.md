@@ -2137,6 +2137,71 @@ delta (natural transformation) :: W -> W ∘ W
 
 ### 9.2 Lenses categorically
 
+## 7 [Seven Sketches in Compositionality: An Invitation to Applied Category Theory - David I. Spivak and Brendan Fong](https://www.youtube.com/playlist?list=PLKvKTRWejv0KqyzCH9gUD4k1QIKj10stE)
+
+[web page](http://math.mit.edu/~dspivak/teaching/sp18/)
+
+### Chapter 1: Cascade effects: posets and adjunctions.
+
+`mpv --softvol yes --softvol-max 400` for volume amplification
+
+#### 1.1
+> Poset (partially-ordered set)
+> Cascade of effects (generative effects)
+> e.g. cascading failure in a system
+
+> poset example: graph partition
+> ordering of connectivity in a graph
+> Partition of a set S is a set of disjoint nonempty sets whose union is S
+> partition function is surjective
+
+> `join` of `a` and `b` is the smallest element greater than (`>=`) both `a` and `b`
+> (Colimit in category)
+> `meet` of `a` and `b` is the greatest element smaller than (`<=`) both `a` and `b`
+> (Limit in category)
+
+> Definition of preorder set:
+> Let S be a set, a pre-order on S is a relation `R \subset S x S`
+> where `R(s1, s2)` if `(s1, s2) \in R`, e.g. `s1 <= s2`
+> laws:
+> 1. reflexivity: `R(s, s)` forall `s \in S`
+> 2. transitivity: if `R(s1, s2), R(s2, s3)`, then `R(s1, s3)`
+
+> partial order is an antisymmetric preorder
+> 3. antisymmetry: if R(a, b) and R(b, a), then `a = b`
+
+> Example: natural number set under `<=`
+> `join` = `max`
+> `meet` = `min`
+
+> Example: natural number set under `\`
+> Hasse diagram:
+```
+8
+ \
+  4   6   9
+   \ / \ /
+  5 2   3 7
+   \ \ / /
+      1
+```
+> `join` = `lcm`, least common multiple
+> `meet` = `gcd`, greatest common divider
+
+> Example: tree of life
+
+### Chapter 2: Data transformations: categories, functors, universal constructions.
+
+### Chapter 3: Resource theories and navigation: Monoidal posets and enrichment. 
+
+### Chapter 4: Collaborative design: Profunctors, categorification, and monoidal categories.
+
+### Chapter 5: Signal flow diagrams: Props, presentations, and proofs.
+
+### Chapter 6: Electric circuits: hypergraph categories and operads.
+
+### Chapter 7: Logic of behavior: sheaves toposes, and internal languages.
+
 
 # Politics
 
