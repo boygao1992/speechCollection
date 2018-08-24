@@ -332,7 +332,7 @@ class Functor f where
 ```
 
 ```purescript
-flubble :: forall f. Traversable t -> Applicative t -> f String -> f String
+flubble :: forall f. Traversable t => Applicative t => f String -> f String
 flubble traversableDict applicativeDict xs =
   applicativeDict.pure
   applicativeDict."Apply".apply
@@ -1736,6 +1736,46 @@ s1 = iterateS (+1) 1
 
 -- takeS 6 $ s1 => [1,2,3,4,5,6]
 ```
+
+
+## 16. [Lenses, Folds, Traversals - 2nd NY Haskell meetup](https://www.youtube.com/watch?v=cefnmjtAolY)
+> @PLT_Borat: Costate Comonad Coalgebra is equivalent of Java's member variable update technology for Haskell.
+> Record accessing syntax is not composable.
+
+> a simple definition of Lens
+```haskell
+data Lens s a = Lens
+  { set  :: s -> a -> s
+  , view :: s -> a
+  }
+view :: Lens s a -> s -> a
+set :: Lens s a -> s -> a -> s
+
+-- Laws
+-- 1. set l (view l s) s = s
+-- 2. view l (set l s a) = a
+-- 3. set l (set l s a ) b = set l s b -- set twice at the same place, the first one doesn't matter
+```
+
+> a cleaner definition,
+> ```haskell
+> data Lens s a = Lens (s -> (a -> s, a))
+> ```
+which "merges" `set` and `view` by `fanout`(`set &&& view`) since they both share an input argument with type `s`
+
+> happen to be isomorphic to the construction of a `Store` Monad which is theoretically a Costate Comonad, thus Lens itself is a Costate Comonad Coalgebra
+```haskell
+data Store s a = Store (s -> a) s
+
+newtype Lense s a = Lens (s -> Store a s)
+
+instance Category Lens where
+  id = Lens (Store id)
+  Lens f . Lens g = Lens $ \r -> case g r of
+    Store sr s -> case f s of
+      Store ts t -> Store (sr . ts) t
+```
+
 
 # Computer Vision
 
