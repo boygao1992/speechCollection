@@ -1739,6 +1739,7 @@ s1 = iterateS (+1) 1
 
 
 ## 16. [Lenses, Folds, Traversals - 2nd NY Haskell meetup](https://www.youtube.com/watch?v=cefnmjtAolY)
+
 > @PLT_Borat: Costate Comonad Coalgebra is equivalent of Java's member variable update technology for Haskell.
 > Record accessing syntax is not composable.
 
@@ -1776,6 +1777,56 @@ instance Category Lens where
       Store ts t -> Store (sr . ts) t
 ```
 
+[`ekmett/lens > Wiki > Derivation`](https://github.com/ekmett/lens/wiki/Derivation)
+> The power of (.)
+[Compositions of compositions](https://gist.github.com/rebcabin/375cc457241ba7d8ee90cb48312b5c9d)
+> ```haskell
+> (.)         :: (b -> c) -> (a              -> b) -> a              -> c
+> (.).(.)     :: (b -> c) -> (a1 -> a2       -> b) -> a1 -> a2       -> c
+> (.).(.).(.) :: (b -> c) -> (a1 -> a2 -> a3 -> b) -> a1 -> a2 -> a3 -> c
+> ```
+
+```haskell
+(.) :: forall a b c. (b -> c) -> Arrow a1 b -> Arrow a1 c
+(.).(.) :: forall a1 a2 b c. (b -> c) -> Arrow a1 (Arrow a2 b) -> Arrow a1 (Arrow a2 c)
+(.).(.).(.) :: forall a1 a2 a3 b c. (b -> c) -> Arrow a1 (Arrow a2 (Arrow a3 b)) -> Arrow a1 (Arrow a2 (Arrow a3 c))
+
+fmap :: Functor f => (b -> c) -> f b -> f c
+fmap.fmap :: (Functor f, Functor g) => (b -> c) -> f(g b) -> f(g c)
+fmap.fmap.fmap :: (Functor f, Functor g, Functor h) => (b -> c) -> f(g(h b)) -> f(g(h c))
+
+instance Functor (Arrow e) where
+  fmap = (.)
+
+-- composition of Functors is still a Functor
+-- thus, Arrow a1 (Arrow a2 (Arrow a3 _)) ~= (Arrow a1).(Arrow a2).(Arrow a3) _
+-- is a Functor
+```
+
+> [Semantic Editor Combinators - Conal Elliott](http://conal.net/blog/posts/semantic-editor-combinators)
+> ```haskell
+> type SEC s t a b = (a -> b) -> s -> t
+>
+> fmap :: Functor f => (a -> b) -> f a -> f b
+> fmap :: Functor f => Sec (f a) (f b) a b
+>
+> result :: Sec (e -> a) (e -> b) a b
+> result = (.)
+>
+> -- result :: Sec (Arrow e a) (Arrow e b) a b
+> -- result = fmap
+>
+> element :: Sec [a] [b] a b
+> element = fmap
+>
+> second :: Sec (c, a) (c, b) a b
+> second = fmap
+>
+> first :: Sec (a, c) (b, c) a b
+> first f (a, b) = (f a, b)
+> ```
+
+> Setters
 
 # Computer Vision
 
