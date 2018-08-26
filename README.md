@@ -1831,7 +1831,7 @@ instance Functor (Arrow e) where
 
 ## 17. Hexagonal Architecture
 
-#### [Matthias Noback - Hexagonal Architecture - Message-Oriented Software Design](https://www.youtube.com/watch?v=K1EJBmwg9EQ)
+#### 17.1 [Matthias Noback - Hexagonal Architecture - Message-Oriented Software Design](https://www.youtube.com/watch?v=K1EJBmwg9EQ)
 
 [Web Services Description Language (WSDL)](https://en.wikipedia.org/wiki/Web_Services_Description_Language)
 > an XML-based interface definition language that is used for describing the functionality offered by a web service.
@@ -1846,7 +1846,7 @@ command handlers - interpreters
 > "A good software architecture allows decisions to be deferred and delayed"
 > - Robert Martin, Screaming Architecture
 
-#### Alistair in the "Hexagone"
+#### 17.2 Alistair in the "Hexagone"
 
 > configurable dependency
 > dependency injection strategy is one of different ways to achieve this
@@ -2050,6 +2050,22 @@ and different pathways are not independent (one integration point failed, everyt
 
 Well, this could be a problem around modulization of domain model which is not HA's focus.
 
+#### 17.3 [Chris Fidao - Hexigonal Architecture](https://www.youtube.com/watch?v=6SBjKOwVq0o)
+
+CommandBus on top of Alistair's model for concurrency (I suppose)
+
+Framework layer (Port)
+- translate inbound IO effects (through callbacks) as inbound Command and push it into CommandBus in Application layer
+- executors of outbound IO effects from Application layer
+Application layer (Adapter)
+- dispatch Commands in the CommandBus to Domain layer
+- translate outbound Command from Domain layer as outbound IO effects
+- dispatch different types of IO effects to corresponding drivers in the Framework layer
+Domain layer (Hexagon)
+- (current) State x (inbound) Command -> (new) State x (outbound) Command
+- push outbound Command into CommandBus in Application layer
+
+dependency through interface ~= callback in languages with lambda functions
 
 # Computer Vision
 
