@@ -1853,7 +1853,202 @@ command handlers - interpreters
 
 [1/3](https://www.youtube.com/watch?v=th4AgBcrEHA)
 [2/3](https://www.youtube.com/watch?v=iALcE8BPs94)
+
+```c#
+using NFluent;
+using NUnit.Framework;
+using NSubstitute; // .Net mocking frameworks
+
+namespace HexagonalThis.Tests
+{
+  public class AcceptanceTests
+  {
+    [Test]
+    public void Should_give_Verses_when_asked_for_Poetry()
+    {
+      // IRequestVerses : left-side Port
+      // PoetryReader : the Hexagon
+      IRequestVerses poetryReader = new PoetryReader();
+      var verses = poetryReader.giveMeSomePoetry();
+
+      Check.That(verses).IsEqualTo("I want to sleep\r\nSwat the flies\r\nSoftly, please.\r\n\r\n-- Masaoka Shiki (1867-1902)");
+    }
+    
+    [Test]
+    public void Should_give_Verses_when_asked_for_Poetry_with_the_support_of_a_PoetryLibrary()
+    {
+      IObtainPoems poetryLibrary = Substitute.For<IObtainPoems>();
+      poetryLibrary.getMeAPoem().Returns("If you could read a leaf or tree\r\nyou'd have no need of books.\r\n-- Alistair Cockburn (1987)");
+      
+      var poetryReader = new PoetryReader(poetryLibrary);
+      var verses = poetryReader.giveMeSomePoetry();
+      
+      Check.That(verses).IsEqualTo("If you could read a leaf or tree\r\nyou'd have no need of books.\r\n-- Alistair Cockburn (1987)");
+      
+    }
+
+    [Test]
+    public void Should_give_Verses_when_asked_for_Poetry_with_the_support_of_a_Console()
+    {
+      // 1. Instantiate right-side Adapter(s)
+      IObtainPoems poetryLibrary = Substitute.For<IObtainPoems>();
+      poetryLibrary.getMeAPoem().Returns("If you could read a leaf or tree\r\nyou'd have no need of books.\r\n-- Alistair Cockburn (1987)");
+      
+      // 2. Instantiate the Hexagon
+      var poetryReader = new PoetryReader(poetryLibrary);
+      
+      IWriteLines publicationStrategy = Substitute.For<IWriteLines>();
+      var consoleAdapter = new ConsoleAdapter(poetryReader, publicationStrategy);
+      
+      consoleAdapter.ask(); // Input
+      
+      // Check that the Console.writeline has been called
+      publicationStrategy.Received().writeLine("If you could read a leaf or tree\r\nyou'd have no need of books.\r\n-- Alistair Cockburn (1987)");
+    }
+    
+    [Test]
+    public void Sould_give_verses_when_asked_for_poetry_with_the_support_of_a_FileAdapter
+    {
+      var fileAdapter = new PoetryLibraryFileAdapter(@"./Rimbaud.txt");
+      
+      var poetryReader = new PoetryReader(fileAdapter);
+      
+      var verses = poetryReader.giveMeSomePoetry();
+      
+      Check.That(verses).IsEqualTo("Come je descendais ...");
+    }
+  }
+  
+  public class PoetryLibraryFileAdapter : IObtainPoems
+  {
+    private string poem;
+    
+    public PoetryLibraryFileAdapter(string filePath)
+    {
+      this.poem = File.ReadAllText(filePath);
+    }
+    
+    public string getMeSomePoetry()
+    {
+      return this.poem;
+    }
+    
+  }
+  
+  public interface IWriteLines
+  {
+    void writeLine(string text);
+  }
+  
+  public class ConsoleAdapter // both Input and Output
+  {
+    private readonly IRequestVerses poetryReader;
+    private readonly IWriteLines publicationStrategy;
+
+    public ConsoleAdapter(IRequestVerses poetryReader, IWriteLines publicationStrategy)
+    {
+      this.poetryReader = poetryReader; -- assume the dependencies for PoetryReader are fulfilled
+      this.publicationStrategy = publicationStrategy;
+    }
+    
+    public void ask()
+    {
+      // from infra to domain
+      // currently input is Unit, so nothing to be transformed
+      
+      // business logic
+      var verses = this.poetryReader.giveMeSomePoetry(); // PoetryReader, Input Effect
+      
+      // from domain to infra
+      var transformedVerses = $"Poem: {verses}"
+      this.publicationStrategy.writeLine(transformedVerses); // IWriteLines, Output Effect
+    }
+  }
+  
+  public class HardCodedPoetryLibrary : IObtainPoems
+  {
+    public string getMeAPoem()
+    {
+      return "I want to sleep\r\nSwat the flies\r\nSoftly, please.\r\n\r\n-- Masaoka Shiki (1867-1902)";
+    }
+  }
+  
+  // <summary>
+  // right-side Port
+  // </summary>
+  public interface IObtainPoems
+  {
+    string getMeAPoem();
+  }
+  
+  public class PoetryReader : IRequestVerses
+  {
+    private readonly IObtainPoems poetryLibrary; -- first dependency
+  
+    public PoetryReader() : this(new HardCodedPoetryLibrary()) {}
+    public PoetryReader(IObtainPoems poetryLibrary)
+    {
+      this.poetryLibrary = poetryLibrary;
+    }
+  
+    public string giveMeSomePoetry()
+    {
+      return this.poetryLibrary.getMeAPoem();
+    }
+  }
+  
+  public interface IRequestVerses
+  {
+    string giveMeSomePoetry(); -- () -> IO String
+  }
+}
+```
+
 [3/3](https://www.youtube.com/watch?v=DAe0Bmcyt-4)
+
+
+Hexagonal Architecture emphasizes the distinction between domain logic and IO effects.
+But it doesn't highlight potentially multiple representations of the same domain model.
+The different representations are buried in Adapters (/translators) and directly shipped into/outside the application.
+
+The rationale might be the tight connection between the IO medium and the corresponding representation in the old days.
+e.g. 
+Console -- Text
+HTTP -- BitString
+UI -- HTML
+
+But now, the same application can target multiple platforms which all have their own UI conventions where the distinction between different representations is wide enough to motivate a separate domain concept.
+
+CQRS has this in mind.
+
+[CQRS - Martin Fowler](https://martinfowler.com/bliki/CQRS.html)
+> The mainstream approach people use for interacting with an **information system** is to treat it as a **CRUD** datastore.
+> By this I mean that we have mental model of some record structure where we can create new records, read records, update existing records, and delete records when we're done with them.
+> In the simplest case, our interactions are all about storing and retrieving these records.
+
+> As our needs become more sophisticated we steadily move away from that model.
+> As this occurs we begin to see multiple representations of information.
+> When users interact with the information they use **various presentations** of this information, each of which is a different representation.
+
+> Developers typically build their own conceptual model which they use to manipulate the core elements of the model.
+> If you're using a Domain Model, then this is usually the conceptual representation of the domain.
+> You typically also make the persistent storage as close to the conceptual model as you can.
+
+> This structure of multiple layers of representation can get quite complicated, but when people do this they still resolve it down to **a single conceptual representation** which acts as **a conceptual integration point** between all the presentations.
+
+> The change that CQRS introduces is to split that conceptual model into separate models for update and display, 
+
+> A web example would see a user looking at a web page that's rendered using the query model.
+> If they initiate a change that change is routed to the separate command model for processing, the resulting change is communicated to the query model to render the updated state.
+
+Another problem doesn't solve by the Hexagonal Architecture, even without nested layers, is that 
+- the cascading pathways of events through the object graph are implicit (there is no one place in the code base to check all possible pathways,
+- and messages can be passed back and forth between objects (feedback loops) so there's no way programmers can reason about
+  - whether it will halt or not,
+  - where the message will end up being and get consumed by which driver, by just staring at the code) 
+and different pathways are not independent (one integration point failed, everything collapses; to make it robust, the reuse components should be stateless/context-free).
+
+Well, this could be a problem around modulization of domain model which is not HA's focus.
 
 
 # Computer Vision
