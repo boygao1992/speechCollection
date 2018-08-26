@@ -2067,6 +2067,50 @@ Domain layer (Hexagon)
 
 dependency through interface ~= callback in languages with lambda functions
 
+
+> Domain layer example
+```php
+class Ticket extends Model {
+  public function assignStaffer(Staffer $staffer) {
+    if(! $staffer->categories->contains( $this->category ) ) {
+      throw new DomainException("Staffer can't be assigned to " $this->category);
+    }
+    $this->staffer()->associates($staffer); // Set Relationship
+    return $this;
+  }
+
+  public function setCategory(Category $category) {
+    if( $this->staffer instanceof Staffer && ! this->staffer->categories->contains( $category ) ) {
+      $this->staffer = null; // Unset staffer if can't be assigned to set category
+    }
+    $this->category()->associate( $category ); // Set Relationship
+    return $this;
+  }
+  
+  public function save(array $options = array()) {
+    /* Integrity Checks, and then: */
+    if ( ! $this->exists ) {
+      $this->raise( new TicketCreatedEvent($this) ); -- create Command and push it into CommandBus
+    }
+    return parent->save($options);
+  }
+}
+
+class CreateTicketCommand {
+  protected $data;
+  
+  public function __constructs($data) {
+    $this->data = $data;
+  }
+  
+  public function __get($property) {
+    // simplified example
+    return $this->data[$property];
+  }
+}
+```
+
+
 # Computer Vision
 
 ## 1.[Stanford CS231n](https://www.youtube.com/playlist?list=PLf7L7Kg8_FNxHATtLwDceyh72QQL9pvpQ)
