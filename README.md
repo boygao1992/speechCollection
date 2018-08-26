@@ -1828,6 +1828,34 @@ instance Functor (Arrow e) where
 
 > Setters
 
+
+## 17. Hexagonal Architecture
+
+#### [Matthias Noback - Hexagonal Architecture - Message-Oriented Software Design](https://www.youtube.com/watch?v=K1EJBmwg9EQ)
+
+[Web Services Description Language (WSDL)](https://en.wikipedia.org/wiki/Web_Services_Description_Language)
+> an XML-based interface definition language that is used for describing the functionality offered by a web service.
+
+message/event can be defined as method (with desired payloads as its arguments) in an object interface
+but method is directional edges (`Input :: StateTransitionObject ~> State -> (State, Output)`) and hard to be shared
+then defined as data-type / object
+
+command - DSL implemented in object system
+command handlers - interpreters
+
+> "A good software architecture allows decisions to be deferred and delayed"
+> - Robert Martin, Screaming Architecture
+
+#### Alistair in the "Hexagone"
+
+> configurable dependency
+> dependency injection strategy is one of different ways to achieve this
+
+[1/3](https://www.youtube.com/watch?v=th4AgBcrEHA)
+[2/3](https://www.youtube.com/watch?v=iALcE8BPs94)
+[3/3](https://www.youtube.com/watch?v=DAe0Bmcyt-4)
+
+
 # Computer Vision
 
 ## 1.[Stanford CS231n](https://www.youtube.com/playlist?list=PLf7L7Kg8_FNxHATtLwDceyh72QQL9pvpQ)
