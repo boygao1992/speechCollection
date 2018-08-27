@@ -2090,7 +2090,7 @@ class Ticket extends Model {
   public function save(array $options = array()) {
     /* Integrity Checks, and then: */
     if ( ! $this->exists ) {
-      $this->raise( new TicketCreatedEvent($this) ); -- create Command and push it into CommandBus
+      $this->raise( new TicketCreatedEvent($this) ); // create Command and push it into CommandBus
     }
     return parent->save($options);
   }
@@ -2106,6 +2106,87 @@ class CreateTicketCommand {
   public function __get($property) {
     // simplified example
     return $this->data[$property];
+  }
+}
+
+class SimpleCommandBus {
+  // ...
+  public function execute( $command ) {
+    return $this->getHandler( $command )
+                ->handle( $command )
+  }
+}
+
+class CreateTicketHandler implements HandlerInterface {
+  public function Handle( $command ) {
+    $this->validate( $command ); // Throw ValidationException
+    $this->save( $command );
+  }
+  
+  protected function save( $command ) {
+    $ticket = new Ticket;
+    $ticket->setCategory( $this->catRepo->find($command->category_id) );
+    $ticket->setStaffer( $this->staffRepo->find($command->staffer_id) );
+    $ticket->addMessage( $command->message );
+    
+    $this->ticketRepo->save( $ticket ); // Use Repositories
+    
+    $this->dispatcher->dispatch( $ticket->flushEvents() ); //Fire Events
+  }
+}
+
+class DbTicketRepository implements RepositoryInterface {
+  public function getStaffOpenTickets(Staffer $staffer, $limit=10) {
+    return $this->ticket->where('staff_id', $staffer->id)
+                ->take($limit)->get();
+  }
+  
+  public function save(Ticket $ticket) {
+    $ticket->save();
+  }
+}
+
+class TicketController extends BaseController {
+  public function createTicket() {
+    $command = new CreateTicketCommand( Input::all() );
+    
+    try {
+      $this->bus->execute($command);
+    }
+    catch(ValidationException $e) {
+      return Redirect::to('/tickets/new')->withErrors( $e->getErrors() );
+    }
+    catch(DomainException $e) {
+      return Redirect::to('/tickets/new')->withErrors( $e->getErrors() );
+    }
+    
+    return Redirect::to('/tickets');
+  }
+}
+
+class SetEmailNotifier implements NotifierInterface {
+  public function __construct(SesClient $client) {
+    $this->client = $client;
+  }
+  
+  public function send(Message $message) {
+    $to = [$message->to()];
+    $message = ['Data' => $message->message()];
+    
+    $this->client->sendEmail([
+      'Destination' => ['ToAddresses' => $to],
+      'Message' => ['Body' => ['Html' => $message]]
+    ]);
+  }
+}
+
+class LaravelDispatcher implements Dispatcher {
+  public function __construct(EventDispatcher $dispatcher) {
+    $this.dispatcher = $dispatcher;
+  }
+  
+  public function dispatch(Array $events) {
+    $this->dispatcher->fire( $event->name(), $event );
   }
 }
 ```
