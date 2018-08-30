@@ -2325,6 +2325,34 @@ Component is both Comonad and Monad
 >
 > \* when `f` pairs with `g`
 
+## 19.[LambdaConf 2015 - A Practical Introduction to Haskell GADTs Richard Eisenberg](https://www.youtube.com/watch?v=6snteFntvjM)
+
+```haskell
+{-# LANGUAGE GADTs #-}
+
+data STy ty where -- a Type function where ty \in { Int, Bool }, not universally polymorphic but bounded by a set of Types
+  SInt :: STy Int -- two Data constructors with separated Types
+  SBool :: STy Bool
+
+zero :: STy ty -> ty
+zero SInt = 0
+zero SBool = False
+
+-- alternatively
+data STy
+  = SInt -- two Data constructors sharing the same (product) Type
+  | SBool
+
+data STyVal
+  = SIntV Int
+  | SBoolV Bool
+
+zero :: STy -> STyVal
+zero SInt = SIntV 0
+zero SBool = SBoolV False
+
+```
+
 # Computer Vision
 
 ## 1.[Stanford CS231n](https://www.youtube.com/playlist?list=PLf7L7Kg8_FNxHATtLwDceyh72QQL9pvpQ)
