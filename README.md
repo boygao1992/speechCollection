@@ -2058,19 +2058,19 @@ Framework layer (Port)
 - translate inbound IO effects (through callbacks) as inbound Command and push it into CommandBus in Application layer
 - executors of outbound IO effects from Application layer
 Application layer (Adapter)
-- dispatch Commands in the CommandBus to Domain layer
-- translate outbound Command from Domain layer as outbound IO effects
+- CommandBus: dispatch Commands in the CommandBus to Domain layer
+- Dispatcher: translate outbound Event from Domain layer as outbound IO effects
 - dispatch different types of IO effects to corresponding drivers in the Framework layer
 Domain layer (Hexagon)
-- (current) State x (inbound) Command -> (new) State x (outbound) Command
-- push outbound Command into CommandBus in Application layer
+- Handler: (current) State x (inbound) Command -> (new) State x (outbound) Events
+- push outbound Events into Dispatcher in Application layer
 
 dependency through interface ~= callback in languages with lambda functions
 
 
 > Domain layer example
 ```php
-class Ticket extends Model {
+class Ticket extends Model { // Domain layer
   public function assignStaffer(Staffer $staffer) {
     if(! $staffer->categories->contains( $this->category ) ) {
       throw new DomainException("Staffer can't be assigned to " $this->category);
@@ -2109,7 +2109,7 @@ class CreateTicketCommand {
   }
 }
 
-class SimpleCommandBus {
+class SimpleCommandBus { // Application layer
   // ...
   public function execute( $command ) {
     return $this->getHandler( $command )
@@ -2117,8 +2117,8 @@ class SimpleCommandBus {
   }
 }
 
-class CreateTicketHandler implements HandlerInterface {
-  public function Handle( $command ) {
+class CreateTicketHandler implements HandlerInterface { // Domain layer
+  public function handle( $command ) {
     $this->validate( $command ); // Throw ValidationException
     $this->save( $command );
   }
@@ -2191,6 +2191,139 @@ class LaravelDispatcher implements Dispatcher {
 }
 ```
 
+
+
+## 18. [PS Unscripted - Comonads for UIs](https://www.youtube.com/watch?v=EoJ9xnzG76M)
+
+> ```haskell
+> class Functor w => Comonad m where
+>   extract   :: w a -> a
+>   duplicate :: w a -> w (w a)
+>   (=>>)     :: w a -> (w a -> b) -> w b
+>
+> (=>=) :: Comonad m => (w a -> b) -> (w b -> c) -> w a -> c -- Cokleisli composition
+> (f =>= g) w = g (w =>> f)
+>
+> -- laws
+> f :: w a -> b
+>       extract :: w b -> b
+> f =>= extract = f
+> extract :: w a -> a
+>             f :: w a -> b
+> extract =>= f = f
+> f =>= (g =>= h) = (f =>= g) =>= h
+>
+> -- example: Store Comonad
+> data Store s a = Store s (s -> a)
+>
+> instance Comonad (Store s) where
+>   extract :: Store s a -> a
+>   extract (Store here go) = go here
+>   duplicate :: Store s a -> Store s (Store s a)
+>   duplicate (Store here go) =
+>     Store here $ \there -> Store there go
+>
+> -- example: Traced
+> data Traced w a = Traced (w -> a)
+> instance Monoid w => Comonad (Traced w) where
+>   extract :: Traced w a -> a
+>   extract (Traced f) = f mempty
+>   duplicate :: Traced w a -> Traced w (Traced w a)
+>   duplicate (Traced f) =
+>     Traced $ \w -> Traced (f . (w <>))
+> ```
+
+[The Dual of Substitution is Redecoration](https://pdfs.semanticscholar.org/b994/9ae4a04fb43a9279ade8615d448e77d563e5.pdf)
+
+[Cofree meets Free](http://blog.sigfpe.com/2014/05/cofree-meets-free.html)
+
+[Comonads in Everyday Life](https://fmapfixreturn.wordpress.com/2008/07/09/comonads-in-everyday-life/)
+
+> The virtual DOM API
+> ```haskell
+> data VDOM e -- e for Events
+> data Patch
+>
+> diff :: VDOM e -> VDOM e -> Patch
+> apply :: Patch -> Effect Unit
+> ```
+
+> Components
+> ```haskell
+> data Component model = Component
+>   { initialState :: model
+>   , render       :: model -> VDOM model
+>   }
+> ```
+
+> can be modeled as Store
+> ```haskell
+> type Component model = Store model (VDOM model) -- s = model, a = VDOM model
+>
+> instance Comonad (Store s) where
+>   -- renders the component's current state
+>   extract :: Store s a -> a
+>   extract :: Component model -> VDOM model
+>
+>   -- captures the possible future states of the component
+>   duplicate :: w a -> w (w a)
+>   duplicate :: Store s a -> Store s (Store s a)
+>   duplicate :: Component model -> Store model (Component model)
+> ```
+
+> How can we explore the future?
+> ```haskell
+> future :: Store model (Component model)
+>
+> explore :: Store model (Component model) -> Component model
+> -- join :: Monad w => w (w a) -> w a
+> ```
+
+Component is both Comonad and Monad
+
+> we can
+> - read the current state
+> - move to a new state
+> which can be packaged up using the `State` monad
+> ```haskell
+> explore :: State model () -> Store model (Component model) -> Component model
+> explore state (Store here go) = go here
+>   where
+>     (_, there) = runState state here -- state transition from `here` to `there`
+> ```
+
+> redefine `Component`
+> ```haskell
+> data Component model = Component
+>   { initialState :: model
+>   , render       :: model -> VDOM (State model ())
+>   }
+>
+> -- Component is both a Store Comonad and a State Monad
+> type Component model = Store model (VDOM (State model ()))
+> ```
+
+> Pairings
+> ```haskell
+> data Component model
+>   -- w (VDOM (m ()))
+>   = Store model (VDOM (State model ()))
+>
+> explore :: m () -> w a -> a
+>
+> -- a more general concept
+> pairing :: m (a -> b) -> w a -> b
+> ```
+
+> | Left Adjoint   | Right Adjoint     | Framework   |
+> |----------------|-------------------|-------------|
+> | `State s`      | `Store s`         | React       |
+> | `Writer w`     | `Traced w`        | Incremental |
+> | `Reader e`     | `Env e`           |             |
+> | `Free f`       | `Cofree g` (\*)   | Halogen     |
+> | `Free ((,) i)` | `Cofree ((->) i)` | Elm, Redux  |
+>
+> \* when `f` pairs with `g`
 
 # Computer Vision
 
