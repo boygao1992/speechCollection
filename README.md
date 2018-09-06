@@ -2745,7 +2745,11 @@ delta (natural transformation) :: W -> W ∘ W
 
 ### 7.2 Comonads Categorically and Examples
 
-### 8.1 F-Algebra, Lambek's lemma
+### 8.1 [F-Algebra, Lambek's lemma](https://www.youtube.com/watch?v=zkDVCQiveEo&list=PLbgaMIhjbmElia1eCEZNvsVscFef9m0dm&index=16)
+
+```haskell
+type Algebra f a = f a -> a
+```
 
 ### 8.2 Catamorphisms and Anamorphisms
 
