@@ -2666,9 +2666,19 @@ TODO: replace sets of commutations by introducing a natural transformation at a 
 
 ### 4.1 Representable Functors
 
-### 4.2 The Yoneda Lemma
+### 4.2 [The Yoneda Lemma](https://www.youtube.com/watch?v=BiWqNdtptDI&index=9)
 
-### 5.1 Yoneda Embedding
+### 5.1 [Yoneda Embedding](https://www.youtube.com/watch?v=p_ydgYm9-yg&index=10)
+
+> LHS: a polymorphic higher-order function
+> RHS: a data-type
+
+> example
+> `alpha :: (a -> x) -> [x]` is isomorphic to `[a]`
+> the function must encapsulate/memorize `[a]` to construct `[x]`
+
+similarly,
+`type Lens s t a b = (a -> f b) -> (s -> f t)` is isomorphic to `s -> (a, b -> t)`
 
 ### 5.2 Adjunctions
 
