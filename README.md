@@ -2751,11 +2751,11 @@ delta (natural transformation) :: W -> W ∘ W
 type Algebra f a = f a -> a
 ```
 
-### 8.2 Catamorphisms and Anamorphisms
+### 8.2 [Catamorphisms and Anamorphisms](https://www.youtube.com/watch?v=PAqzQMzsUU8&list=PLbgaMIhjbmElia1eCEZNvsVscFef9m0dm&t=0s&index=17)
 
-### 9.1 Lenses
+### 9.1 [Lenses](https://www.youtube.com/watch?v=9_iYlp8smc8&list=PLbgaMIhjbmElia1eCEZNvsVscFef9m0dm&t=0s&index=18)
 
-### 9.2 Lenses categorically
+### 9.2 [Lenses categorically](https://www.youtube.com/watch?v=rAa3pGp97IM&list=PLbgaMIhjbmElia1eCEZNvsVscFef9m0dm&t=564s&index=19)
 
 ## 7 [Seven Sketches in Compositionality: An Invitation to Applied Category Theory - David I. Spivak and Brendan Fong](https://www.youtube.com/playlist?list=PLKvKTRWejv0KqyzCH9gUD4k1QIKj10stE)
 
