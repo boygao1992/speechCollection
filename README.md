@@ -2353,6 +2353,29 @@ zero SBool = SBoolV False
 
 ```
 
+## 20.[React Fiber | Andrew Clark: What's Next for React — ReactNext 2016](https://www.youtube.com/watch?v=aV1271hd9ew)
+
+concurrent scheduling of renders
+
+e.g. prioritize animation frames over data update
+
+> `react/react-reconciler/src/ReactUpdateQueue.js`
+>
+> a form of double buffering
+> - a current queue, which represents the visible state of the screen 
+> - a work-in-progress queue, which can be mutated asynchronously before it's committed
+>
+> Updates are not sorted by priority, but by insertion;
+> new updates are always appended to the end of the list.
+
+each render phase has a priority bar
+
+updates are processed sequentially following the insertion order but drop updates without sufficient priority (lower than the priority bar)
+
+the same update can be processed multiple times across multiple render phases
+
+[acdlite/react-fiber-architecture](https://github.com/acdlite/react-fiber-architecture)
+
 # Computer Vision
 
 ## 1.[Stanford CS231n](https://www.youtube.com/playlist?list=PLf7L7Kg8_FNxHATtLwDceyh72QQL9pvpQ)
