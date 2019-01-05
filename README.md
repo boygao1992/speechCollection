@@ -2859,3 +2859,161 @@ type Algebra f a = f a -> a
 # Politics
 
 ## 1.[Kishore Mahbubani and Weiwei Zhang - new world order](https://www.bilibili.com/video/av27093393)
+
+## 2.[Dirty Money](https://www.netflix.com/title/80118100)
+
+### Ep 6. The Confidence Man
+
+> Tim O'Brien
+> "Fred Trump was authentically self-made, and Fred ultimately passed all that along to Donald."
+> "Trump claimed he only borrowed a million dollars from his father."
+> "He inherited, conservatively, tens of millions of dollars from his father."
+
+>   1. Trump Tower, 1980s
+> Tim O'Brien
+> "Trump has this reptilian, knowing, street-smart awareness of the powers of media."
+> "Donald gets his first taste of real independent fame."
+> A.J. Benza, Gossip Columnist
+> "Long before Internet, especially the '80s and '90s, the way people's images were built, was how they were treated in the newspapers, the tabloids.
+> Anything floating around that became a big story, usually started in the gossip columns."
+> Tim O'Brien
+> "He uses media to keep this financial ping-pong game going about how rich he is."
+
+>   2. Trump Plaza
+> Tim O'Brien
+> "he had everything to gain from using the notoriety, and banks were willing to throw humongous loans at him, as if they were snowballs."
+> "He ended up using that money to go on this shopping spree for anything he wanted to do."
+> "He got into businesses he didn't understand."
+>   3. Trump Shuttle, airline
+> "Losing 85 million dollars a year."
+>   4. Trump Taj Mahal, casino, 1990s
+> Mark Etess, former president & COO of Trump Taj Mahal
+> "I was very surprised at his lack of understanding the moving pieces in operating a casino."
+> "One of the fundamental things that you always have to know about operation of a casino is how much money do you have in the house.
+>  They could not even answer that question."
+> "is a financial disaster and it was the first of Trump's casinos to go into bankruptcy."
+> "Trump's story in Atlantic City, should have been the most successful story in the history of gambling, had he not screwed it up."
+> Tim O'Brien
+> "It was a project so expensive and big that it was beyond both his managerial and financial abilities to run properly."
+> "By the early 1990s, The Trump Organization was facing over 3 billion of debt.
+>  The Taj Mahal, Trump Castle, and Trump Plaza and Casino all went bankrupt."
+
+>   6. licensing, '90s - 2004
+> Tim O'Brien
+> "What Trump was doing from the early '90s to about 2004"
+> ,from a business perspective, he really wasn't doing very much."
+> "He kept himself in the public eye
+> , by being a ubiquitous and easy-to-get presence on talk shows."
+> "Donald Trump is notoriously short-term in his thinking and making cash quickly without being discerning is one of the great Achilles' heels of Donald Trump."
+> "It's what's gotten him into bed at times with questionable people."
+> "It's what's made him plaster his name on so many different products, he's essentially become a human shingle."
+> 
+> "he got into trouble with the banks.
+> But they decided he was worth more alive than dead.
+> His name had a tremendous amount of value, and he ended up licensing his name
+> on these projects, and got a lot of money for that."
+> "Donald Trump's name is on a lot of the buildings
+> , but that doesn't mean he owns those buildings."
+> "He was never the biggest real estate developer in New York, as he claimed, by any measure.
+> By either the value of the property that he had sold or the square footage he owned."
+> "But it was the West Side Yards that launched him in his new role as a licensing and development operation."
+> Adam Davidson
+> "Certainly by the 2000s, no major bank is gonna lend him any money.
+> He defaulted so many times, declared bankruptcy so many times.
+> And you can't be a real estate developer if you can't borrow money."
+> "And this licensing deal solved that problem, bigly."
+> "He didn't have to borrow any money, and he didn't have to do any work."
+> "A key change in the Trump Organization's business model starts sort of accidentally in the late 1990s.
+> The business starts turning international."
+> "Trump was a famous name in Korea."
+
+>   7. The Apprentice, 2004
+> "The Apprentice overnight repositioned him in the American imagination as the embodiment of deal-making savvy, capable entrepreneur"
+> "I think most of the Republican Party and a good portion of Democrats failed to recognize how much The Apprentice 
+> solidified his image in the minds of the very voters who ended up supporting him."
+
+>   8. Trump Towers SoHo
+> Bayrock Group
+>   Tevfik Arif, from Kazakhstan, associated with some of Kazakhstan's more notorious oligarchs who are known as being unbelievably corrupt, met Felix Sater at Russia.
+>   Felix Sater, born in the Soviet Union, grew up in Brooklyn, had a few months as a successful trader on Wall Street, but went in jail after a bar fight, later starts doing one of these pump-and-dump schemes like in The Wolf of Wall Street.
+> Adam Davidson
+> "So this Kazakh refugee, basically with a sketchy past, meets this hustler from the streets of Brooklyn, and they create this company Bayrock."
+> "for Trump SoHo, what Felix Sater arranged was for the main money to come from a man named Tamir Sapir."
+> "this cab driver from Brooklyn is doing these massive deals in the former Soviet Union, where he becomes a multi-billionaire very quickly."
+
+> "while Trump is on The Apprentice pitching Trump SoHo as his project that is wildly successful, it is the exact opposite."
+> "And the building does eventually fail and then sold on to other owners,
+> although it maintains the name Trump SoHo."
+
+>   9. Trump Tower, Baku
+> "In 2010, Felix Sater goes into the Trump Organization and becomes sort of an official deal maker."
+> "So they start doing business with some of the sketchiest people in some of the sketchiest countries."
+> "Trump Organization does this deal with the Mammadov family for Trump Tower, Baku."
+> "The Trump Tower was in a pretty lousy neighborhood in Baku to have a luxury tower, so the building made no sense economically. That's a huge red flag."
+> "the US officials considered Ziya Mammadov to likely be laundering money for the Iranian Revolutionary Guard."
+> "This is the single biggest state sponsor for terrorism in the world."
+
+>   10. Trump Tower, Moscow
+> "Trump has expressed many times he wants a Trump Tower, Moscow."
+> "So Sater starts talking to a guy he grew up with, named Michael Cohen,
+>  who became a high-ranking executive at the Trump Organization
+>  and is now Trump's personal attorney."
+> "But then, they're not getting the right permissions from the Russian government, and Michael Cohen sends an e-mail to the PR department at the Kremlin,
+> I represent Donald Trump and we wanna make this a deal."
+> "The thing is, this all happens in January 2016, in the middle of the presidential campaign."
+> "Trump knew, because Michael Cohen says he spoke to Trump about it three times,
+> that his own high-ranking executive was reaching out to the Kremlin
+> to try and get political favors to get a Trump Moscow built."
+
+>   11. Trump University, Trump Network
+> "it became kind of fly-by-night-ish type of seminar program. And we were now selling $1,500 to $35,000 seminars."
+> "Playbooks for the sales team coach them on how to market the courses, even to single mothers with three children who, quote, may need money for food."
+> "And it was very clear that, ethically, we were not in line."
+>
+> "He made you feel like, through him, you could have the life that you wanted and when people are looking for a way, it's easy to believe him."
+>
+> The mentor was supposed to be handpicked by Trump. It was supposed to be somebody that he had taught. Truth is they never met him and some of them didn't even have a license not to mention being successful.
+>
+> "The only person who is guilty of a cheap publicity stunt is America's leading expert on cheap publicity stunts, Donald Trump."
+>
+> "We just learned that Donald Trump has agreed to settle the lawsuits related to Trump University. It's for $25 million dollars."
+> "Trump University took in close to $50 million in tuition. Under the RICO statute, the damages are tripled."
+> "So if the case goes to trial, he's pushing $200 million in exposure."
+
+>   12. Presidency
+> Walt Shaub, former director of the U.S. Office of Government Ethics
+> "I worked under three different presidents. Bush, Obama and Trump."
+> "There were times when things would get heated with folks from both the Bush and the Obama Administrations."
+> "But they always respected you for standing up and doing your job,
+>  and in the end, we were always able to work it out."
+> "Everything changed when the Trump Administration came in."
+> "One of the issues with the Government Ethics program is
+>  it's based on an assumption that the president cares about ethics, and he's gonna hold his staff accountable."
+> "But from the start, when the president declared he was not going to divest his financial interest,
+>  he departed from an ethical norm established by every president before him since the 1970s."
+> "One of the biggest scams that President Trump has tried to pull is making it sound like he's stepped back from his businesses.
+>  The president misusing the presidency to give free advertising to his own properties whenever possible.
+>  It's just the complete monetization of the presidency.
+>  The thing I'm most worried about regarding the intersection between the Trump brand and Federal Government is that we now no longer have the ability to assess whether his decisions are based on his policy aims or his financial interests."
+> "And then you learn that he's got Trump-branded properties in Turkey and in the Philippines."
+> "It was a difficult decision to quit, but it was a lot more difficult to watch the ethics program being dismantled.
+>  And I now had been dealing with a White House that was determined to drive a Mack Truck through any loopholes they could find in the ethics program.
+>  Every deal I've looked at contains unbelievable ethical lapses and many of the warning signs of criminal activity."
+> "But sometimes I wonder, if maybe his greatest fear is, he doesn’t know what he's done.
+> There's a concept, called willful blindness.
+> You are guilty if you knowingly engage in an illegal action or you're with somebody who's performing an illegal action.
+> That doesn't mean you just don't happen to know. It means you have actively structured your organization to stop yourself from finding out."
+
+## 3. [Elections in Taiwan became its largest entertainment shows](https://www.bilibili.com/video/av39823917)
+
+> - Internet gives rise to global prevalence of Populism
+> The public focus can be easily distracted by funny things on the Internet, especially those happened to political figures in the context of local/national elections.
+> Judicious evaluation over candidates based off their political background, legitimacy of their solutions, etc., is not a social norm.
+> It requires formal education, consistent practice of critical thinking, background knowledge around politics and economics, undistorted sources of information, etc.
+
+> - Gambling around election results becomes a solid business in Taiwan
+
+> - Internet narrows people's choices of information intake
+> People are more willing to read things appealing to their prior preferences and thus these preferences are further reinforced by such a positive feedback loop which eventually persist to the same level as unchallengable religious believes.
+> Internet drastically reduces the opportunity cost for people of similar opinions to group up and solidify each other's opinion with constant positive feedback.
+
