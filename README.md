@@ -3017,3 +3017,48 @@ type Algebra f a = f a -> a
 > People are more willing to read things appealing to their prior preferences and thus these preferences are further reinforced by such a positive feedback loop which eventually persist to the same level as unchallengable religious believes.
 > Internet drastically reduces the opportunity cost for people of similar opinions to group up and solidify each other's opinion with constant positive feedback.
 
+## 4. [STRIKETHROUGH S1 • E4 - This is your brain on terrorism](https://www.youtube.com/watch?v=7ZohjYKGZJM&feature=youtu.be)
+
+> News, by definition, is something that almost never happens.
+> But that's not the way our brains work.
+> If it's in the news, if it's talked about, if we hear about it a lot
+> , we confuse that with it being common.
+
+> This is the economics of news.
+> The way you get that readership and viewership is by being spectacular going with stories, that are scary, that are threatening, that are terrifying.
+
+> Security theater is a security measure that looks good but doesn't do anything.
+> Things like the border wall and the Muslim ban, the things that Trump has made centerpieces of his national security strategy.
+> It's not gonna make us safer but they're big, they are public, and there's a segment of the US that is scared and see those things and feel safer.
+> The problem is the same sensationalist coverage that makes us overestimate the risk of terror, makes it really hard for politicians to say no to security theater.
+
+
+# Economic
+
+## 1.[TieJun Wen - Rural Revitalization (De-urbanization)](https://www.bilibili.com/video/av41025425)
+
+
+- Industrialization and urbanization is by nature anti-ecology, and now pollution is a global issue which raises environmental cost.
+  - arable land loss in growth of real estate is threatening our food safety and crisis is about to come if no action is taken
+    - cause: real estate is more profitable than agriculture by our current economy measure
+    - if banks and markets are not guided by the government, it's for sure an irreversible trend
+- plan
+  - monetize sustainable natural resources and trade in future market
+    - 14 trillion has been invested in infrastructure development in rural area over the last decade
+    - the next boom spot of economy
+- challenges
+  - radicalization of peasant households, units of natural economy, are impeding the formation of village-level cooperatives
+    - cause: prior infeasible attempts to industrialize agriculture
+      - the required conditions for industrial agriculture cannot be met
+      - success of industrial agriculture only happened in countries 
+        - which were colonized during the second industrial revolution and whose indigenous people were almost wiped out
+        - agriculture is then fully controlled by foreign companies and local famine is none of their business
+        - monoculture, low in ecosystem diversity, more vulnerable to environmental changes
+          - historical continuation of wheat farming, originated from Fertile Crescent, individualism
+          - china, wheat farming in the north and rice farming in the south, rice farming requires more collaboration
+    - cooperatives are essential for establishment of lawful contracts between farmers/landholders and investors
+      - cooperatives take the risk for natural disasters and guarantee investors a minimum return rate
+  - non-segmented, comprehensive land-use planning
+    - ecological economy is different from industrial economy
+    - need to consider the unique environmental factors and resource locality for a region
+
