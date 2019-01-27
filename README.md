@@ -3032,6 +3032,8 @@ type Algebra f a = f a -> a
 > It's not gonna make us safer but they're big, they are public, and there's a segment of the US that is scared and see those things and feel safer.
 > The problem is the same sensationalist coverage that makes us overestimate the risk of terror, makes it really hard for politicians to say no to security theater.
 
+## 5.[Martin Jacques - The UK in a China centric World](https://www.youtube.com/watch?v=z_A0S5IyHt0)
+
 
 # Economic
 
@@ -3044,6 +3046,7 @@ type Algebra f a = f a -> a
     - if banks and markets are not guided by the government, it's for sure an irreversible trend
 - plan
   - monetize sustainable natural resources and trade in future market
+    - average increase rate of forestry resource is 8%, even higher than high risk derivatives (~ 5.0%)
     - 14 trillion has been invested in infrastructure development in rural area over the last decade
     - the next boom spot of economy
 - challenges
@@ -3061,4 +3064,9 @@ type Algebra f a = f a -> a
   - non-segmented, comprehensive land-use planning
     - ecological economy is different from industrial economy
     - need to consider the unique environmental factors and resource locality for a region
+
+
+## 2.[Justin Yifu Lin - Speech at 2019 World Economic Forum Affiliated Session](https://www.bilibili.com/video/av41678443)
+
+economic structure optimization
 
