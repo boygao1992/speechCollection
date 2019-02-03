@@ -865,6 +865,7 @@ state
 protocol, encryption/guard
 
 > when an actor receive a message, it can
+>
 > 1. create some more actors
 
 like Promise in JS
@@ -1844,6 +1845,7 @@ command - DSL implemented in object system
 command handlers - interpreters
 
 > "A good software architecture allows decisions to be deferred and delayed"
+>
 > - Robert Martin, Screaming Architecture
 
 #### 17.2 Alistair in the "Hexagone"
@@ -2388,11 +2390,11 @@ the same update can be processed multiple times across multiple render phases
   - Vision, David Marr, 1970s
   - Stages of Visual Representation, David Marr, 1970s
   - Pictorial Structure, Fischler and Elschlager, 1973
-  every object is composed of simple geometric primitives
+    every object is composed of simple geometric primitives
   - Generalized Cylinder, Brooks & Binford, 1979
   - Razor edge detection, David Lowe, 1987
   - Normalized Cut, Shi & Malik, 1997
-  Image segmentation
+    Image segmentation
   - Face Detection, Viola & Jones, 2001
   - "SIFT" & Object Recognition, David Lowe, 1999
   - Spatial Pyramid Matching, Lazebnik, Schmid & Ponce, 2006
@@ -2576,6 +2578,7 @@ CIFAR10
 > - disjunction: either p or q (xor in modern formalism)
 
 > The five indemonstrable forms
+>
 > 1. `if p then q`; `p`; therefore `q` (Modus Ponens)
 
 ```
@@ -2821,6 +2824,7 @@ type Algebra f a = f a -> a
 > 2. transitivity: if `R(s1, s2), R(s2, s3)`, then `R(s1, s3)`
 
 > partial order is an antisymmetric preorder
+>
 > 3. antisymmetry: if R(a, b) and R(b, a), then `a = b`
 
 > Example: natural number set under `<=`
@@ -3069,4 +3073,66 @@ type Algebra f a = f a -> a
 ## 2.[Justin Yifu Lin - Speech at 2019 World Economic Forum Affiliated Session](https://www.bilibili.com/video/av41678443)
 
 economic structure optimization
+
+
+## 3.[Samir Amin: Marx and Living Marxism are More Relevant Today than Ever](https://www.youtube.com/watch?v=08wJ8TTMjWM)
+
+> Semi-Capitalism
+> The distortion in the income distribution could not anymore be compensated by further expansion of capitalism.
+> Therefore, the system was facing crises of capitalism.
+> Two long crises
+> - First crisis: at the end of 19 century
+> - Second crisis: 1973
+
+For a system with distorted income distribution to function without causing a huge social conflict between capitalists and workers, the system has to grow in an exponential rate, which is like the growth rate of cancer or bacteria with unbounded resource from the environment.
+(Human population growth is relatively linear, not logistic nor exponential like animal population in a closed environment, because the growth of technologies compensates it by allowing us to discover and exploit more and more types of resources. But this mode starts to suffer from irreversible changes in the environment due to our aggressive expansion in the last century.)
+
+The exponential growth was first fueled by global colonization during and after WW1 and WW2 to occupy and monetize nature resources around the world which took a few decades.
+It was then fueled by "the third industrial revolution", a huge breakthrough in communication technology, for near two decades before another financial crisis.
+
+Now, the world is still under the impact of the last financial crisis and no significant sign of recovery has shown but many signs of further decay by de-globalization and protectionism which might lead to yet another massive disorder of human civilization.
+Prevalence of Populism around the world is a sign of ongoing revolution in income/resource distribution (including education resource which is more and more privileged in many societies to a point that education system becomes a tool for the upper class to preserve their political positions and wealthiness by projecting established social class hierarchy to student communities, for example in France).
+
+> [Behind the French "Yellow Vest" crisis: current dilemma of Elitism and the teardown of Democratic Republic](https://new.qq.com/omn/20190201/20190201A0HKTE.html)
+> Among all leaders of the top 40 French companies, 80% of them came from one of the three Grande école: École Normale Supérieure, École Polytechnique, École des hautes études commerciales de Paris.
+
+> Monopoly Capitalism
+> 1. transforming a system of capitalism into a system of monopolies
+> 2. deepening the economical, political, cultural power of monopolies
+
+marriage of government and capital ("Government and capital are intrinsically connected.")
+
+>   - deepening the globalization
+
+to project such an unfair distribution to a larger population and eventually everyone on Earth
+
+>   - deepening the polarization between the dominant imperialist powers and those dominated societies
+> 3. financialization
+>   - creating an outlet for excessive profit, or so called "organizing waste", which cannot be invested in the expansion of the productive system
+>     - good one, for example, education (that has no direct contribution to productivity at work, but satisfies curiosity from the beginning and may advance political qualification and later have some impact on the system in the long run)
+>     - bad one, for example, selling cost intrinsic to trademarks (a form of monopoly, both physical and cultural)
+
+> [State Monopoly Capitalism](https://en.wikipedia.org/wiki/State_monopoly_capitalism)
+>  the state intervenes in the economy to protect larger monopolistic or oligopolistic businesses from threats.
+
+> A Semi-Capitalism system, once survived a financial crisis at any price, will persist for a long period of time.
+> We are entering a historical period, not democracy, not end of history (as described in Francis Fukuyama's famous but outdated work), not nationality, etc., but exactly the opposite, a period of wars, revolutionary advances, counter-revolutions, violence, etc.
+> A number of events will happen whether we like it or not.
+
+historical evidence:
+
+> the responses to the first long crisis of capitalism from people around the world: WW1, the Russian revolution, the Great Depression and New Deal, Nazism, Imperialism in Japan, Crisis of the Restoration system in Spain, WW2, the victory of Vietnam army over the Nazi's, the Chinese revolution, etc.
+
+> characteristics of the second long crisis and the responses from monopoly capitalists:
+> 1. reinforcing the monopoly capital
+>   - all economic activities are transformed into subcontracting form of monopoly capital
+>     - e.g. small enterprises like farmers who still remained formally independent but are subcontracted where upstream and downstream supply chains are all controlled by monopoly capital
+>   - thus the pricing power concentrates to monopoly capital which leads to dictatorship
+>     - this further marginalizes small enterprises and squeezes their income to nearly zero
+
+then the government needs a way to comfort the low-income population, that is the welfare system
+- the level of welfare can only get higher in a democratic system because politicians are elected by the crowd most of who don't have long-term thinking over the health of economy and will repel those politicians who advocate to lower the welfare
+- high welfare system is not sustainable because ordinary people are less motivated to work while its benefit from an increasing number of high-early-investment jobs like artists and scientists cannot pay back its cost in the short run
+  - to maintain such a system, government relies on external loans which doesn't help the economy but only defers the burst of a crisis
+    - e.g. Greek
 
