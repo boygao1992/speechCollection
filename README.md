@@ -2378,6 +2378,15 @@ the same update can be processed multiple times across multiple render phases
 
 [acdlite/react-fiber-architecture](https://github.com/acdlite/react-fiber-architecture)
 
+## 21.[ZuriHac 2015 - Discrimination is Wrong: Improving Productivity](https://www.youtube.com/watch?v=cB8DapKQz-I)
+
+> Sorting -> Grouping
+> Contravariant <= Divide <= Divisible
+
+## 22.[Edward Kmett's Haskell Live Coding - Twitch](https://www.twitch.tv/ekmett/videos?filter=all&sort=time)
+
+> Math intensive
+
 # Computer Vision
 
 ## 1.[Stanford CS231n](https://www.youtube.com/playlist?list=PLf7L7Kg8_FNxHATtLwDceyh72QQL9pvpQ)
@@ -3109,7 +3118,7 @@ to project such an unfair distribution to a larger population and eventually eve
 >   - deepening the polarization between the dominant imperialist powers and those dominated societies
 > 3. financialization
 >   - creating an outlet for excessive profit, or so called "organizing waste", which cannot be invested in the expansion of the productive system
->     - good one, for example, education (that has no direct contribution to productivity at work, but satisfies curiosity from the beginning and may advance political qualification and later have some impact on the system in the long run)
+>     - good one, for example, education (that has no direct contribution to productivity at work, but satisfies curiosity from the beginning and may advance one's political qualification and later have some impact on the system in the long run)
 >     - bad one, for example, selling cost intrinsic to trademarks (a form of monopoly, both physical and cultural)
 
 > [State Monopoly Capitalism](https://en.wikipedia.org/wiki/State_monopoly_capitalism)
