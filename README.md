@@ -2385,7 +2385,9 @@ the same update can be processed multiple times across multiple render phases
 
 ## 22.[Edward Kmett's Haskell Live Coding - Twitch](https://www.twitch.tv/ekmett/videos?filter=all&sort=time)
 
-> Math intensive
+### 1. Haskell Live-Coding, Session 1, Commutativity
+
+### 2. Haskell Live-Coding, Session 2.1, Q&A, Free Monad
 
 # Computer Vision
 
