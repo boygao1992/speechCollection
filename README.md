@@ -2389,6 +2389,10 @@ the same update can be processed multiple times across multiple render phases
 
 ### 2. Haskell Live-Coding, Session 2.1, Q&A, Free Monad
 
+## 23.[Dan Doel - Introduction to Low Level Haskell Optimization](https://www.youtube.com/watch?v=McFNkLPTOSY)
+
+## 24.[Edward Kmett - Propagators YOW! Lambda Jam 2016](https://www.youtube.com/watch?v=acZkF6Q2XKs)
+
 # Computer Vision
 
 ## 1.[Stanford CS231n](https://www.youtube.com/playlist?list=PLf7L7Kg8_FNxHATtLwDceyh72QQL9pvpQ)
