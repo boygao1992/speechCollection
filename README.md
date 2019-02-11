@@ -2393,6 +2393,35 @@ the same update can be processed multiple times across multiple render phases
 
 ## 24.[Edward Kmett - Propagators YOW! Lambda Jam 2016](https://www.youtube.com/watch?v=acZkF6Q2XKs)
 
+## 25.[Edward Kmett - Type Classes vs. the World](https://www.youtube.com/watch?v=hIZxTQP1ifo)
+
+> expressions are propositions, types are proofs
+> good and bad about Implicit and orphan instance
+> Constraint Kind
+> Constraint entailment function (able to write type-level function combinators!)
+
+```haskell
+data CProxy (p :: Constraint) where
+  CProxy :: p => CProxy p
+
+newtype Sub (p :: Constraint) (q :: Constraint) = Sub (p => CProxy q)
+infixl 4 Sub as :-
+
+(\\) :: forall p q r. p => (q => r) -> (p :- q) -> r
+r \\ _ = r
+-- input value `r` carries constraint (proof) `q`
+-- output value `r` carries constraint `p`
+
+instance Category (:-) where
+  id :: forall p. p :- p
+  id = Sub D
+
+  (.) :: forall p q r. (q :- r) -> (p :- q) -> (p :- r)
+  qr . pq = Sub $ CProxy \\ qr \\ pq
+```
+
+> proof coherence
+
 # Computer Vision
 
 ## 1.[Stanford CS231n](https://www.youtube.com/playlist?list=PLf7L7Kg8_FNxHATtLwDceyh72QQL9pvpQ)
