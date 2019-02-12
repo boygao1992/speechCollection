@@ -2469,7 +2469,7 @@ Compose (->) q a b
 ~ q a b
 ```
 
-> composition is mu
+> Composition as Coend of Tensor Product of Profunctors
 ```haskell
 mu :: Compose p p a b -> p a b
 ~ (exists x. (p a x, p x b)) -> p a b
@@ -2479,11 +2479,13 @@ mu :: Compose p p a b -> p a b
 (>>>) :: p a x -> p x b -> p a b
 ```
 
-> Composition as Coend of Tensor Product of Profunctors
+> [Laws and Rules for Predicate Logic](https://faculty.sbs.arizona.edu/hammond/archive/ling501-f05/ho7.pdf)
+
 ```haskell
 type Coend p = exists x. p x x
 
 -- two ways to simulate existential type by universal type in Haskell
+-- by Laws of Quantifier Movement in Predicate Calculus
 newtype Coend p = forall x. Coend (p x x)
 
 (exists x. C x) -> y ~ forall x. C x -> y
