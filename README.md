@@ -2422,6 +2422,82 @@ instance Category (:-) where
 
 > proof coherence
 
+## 26.[Bartosz Milewski - Arrows are strong profunctors](https://www.youtube.com/watch?v=hrNfkP8iKAs&t=4656s)
+
+> Pre-Arrows (= Category + Profunctor) are monoids in the category of profunctors
+> - object: profunctors, p
+> - eta (unit): `arr :: forall a b. ((->) a b) -> p a b`
+> - mu: `<<< :: forall a b c. p b c -> p a b -> p a c` (tensor product of two profunctors)
+
+> "Ninja" Yoneda Lemma (a variant of Yoneda Lemma)
+> End of PreYoneda Profunctor
+```haskell
+type End p = forall x. p x x
+
+newtype PreYoneda f a x y = PreYoneda ((a -> x) -> f y)
+instance (Functor f) => Profunctor (PreYoneda f a)
+
+End (PreYoneda f a) ~ forall x. PreYoneda ((a -> x) -> f x)
+
+newtype Yoneda f a = Yoneda (forall x. (a -> x) -> f x)
+-- from a Hom-Functor (a -> _) to any Functor f
+```
+
+> proof: (->) is unit of composition
+```haskell
+type Compose p q a b = exists x. (p a x, q x b)
+instance (Profunctor p, Profunctor q) => Profunctor (Compose p q)
+-- Coyoneda Lemma: Coyoneda f a ~ f a
+type Coyoneda f a = exists x. (x -> a, f x)
+-- Yoneda Lemma: Yoneda f a ~ f a
+type Yoneda f a = forall x. (a -> x) -> f x
+
+-- Left Unit of Composition
+Compose p (->) a b
+~ exists x. (p a x, x -> b)
+~ Coyoneda (p a) b
+~ p a b
+
+-- Right Unit of Composition
+Compose (->) q a b
+~ forall c. Compose (->) q a b -> c
+~ forall c. (exists x. (a -> x, q x b)) -> c
+~ forall c x. (a -> x, q x b) -> c
+~ forall c x. (a -> x) -> (q x b -> c)
+~ forall c. Yoneda (q _ b -> c) a
+~ forall c. q a b -> c
+~ q a b
+```
+
+> composition is mu
+```haskell
+mu :: Compose p p a b -> p a b
+~ (exists x. (p a x, p x b)) -> p a b
+~ forall x. (p a x, p x b) -> p a b
+~ forall x. p a x -> p x b -> p a b
+
+(>>>) :: p a x -> p x b -> p a b
+```
+
+> Composition as Coend of Tensor Product of Profunctors
+```haskell
+type Coend p = exists x. p x x
+
+-- two ways to simulate existential type by universal type in Haskell
+newtype Coend p = forall x. Coend (p x x)
+
+(exists x. C x) -> y ~ forall x. C x -> y
+
+-- Tensor Product of two Profunctors
+data TenProd p q a b x y = TenProd (p a y) (q x b)
+instance (Profunctor p, Profunctor q) => Profunctor (TenProd p q a b)
+
+data Compose p q a b = Coend (TenProd p q a b)
+```
+
+
+
+
 # Computer Vision
 
 ## 1.[Stanford CS231n](https://www.youtube.com/playlist?list=PLf7L7Kg8_FNxHATtLwDceyh72QQL9pvpQ)
