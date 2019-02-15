@@ -2497,7 +2497,9 @@ instance (Profunctor p, Profunctor q) => Profunctor (TenProd p q a b)
 data Compose p q a b = Coend (TenProd p q a b)
 ```
 
+## 27.[Haskell Symposium 2012. Daniel Winograd-Cort: Wormholes - introducing effects to FRP.](https://www.youtube.com/watch?v=KZewVsyTw60)
 
+## 28.[Wellington FP - Why Functional Reactive Programming FRP?](https://www.youtube.com/watch?v=gaG3tIb3Lbk)
 
 
 # Computer Vision
