@@ -2501,6 +2501,9 @@ data Compose p q a b = Coend (TenProd p q a b)
 
 ## 28.[Wellington FP - Why Functional Reactive Programming FRP?](https://www.youtube.com/watch?v=gaG3tIb3Lbk)
 
+## 29.[Robert Harper - Homotopy Type Theory (HoTT)](https://www.youtube.com/playlist?list=PLo61mJSqK5cXHsnYUAXNea31BCj1u-zln)
+
+[CMU 15-819 Homotopy Type Theory](http://www.cs.cmu.edu/~rwh/courses/hott/)
 
 # Computer Vision
 
