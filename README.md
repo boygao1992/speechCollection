@@ -2509,6 +2509,23 @@ data Compose p q a b = Coend (TenProd p q a b)
 
 ## 31.[Functional Reactive Programming - Cleanly Abstracted Interactivity](https://www.youtube.com/watch?v=tyaYLGQSr4g)
 
+## 32.[A Practical Theory of Language-integrated Query](https://www.infoq.com/presentations/theory-language-integrated-query)
+
+[slices](https://homepages.inf.ed.ac.uk/wadler/papers/yow/dsl-long.pdf)
+
+[paper](http://homepages.inf.ed.ac.uk/slindley/papers/practical-theory-of-linq.pdf)
+
+[fsprojects/SQLProvider](https://github.com/fsprojects/SQLProvider)
+
+> How to integrate arbitrary DSL into a host language
+> - experiment: integrate SQL into F#
+> - advantage of using FP languages to implement DSL
+
+## 33.["Everything Old is New Again: Quoted Domain Specific Languages" by Philip Wadler](https://www.youtube.com/watch?v=DlBwJ4rvz5c)
+
+## 34.[Michael Arntzenius - DB ⋈ FP = Datafun: a new functional query language](https://www.youtube.com/watch?v=7HUotKIVFig)
+
+
 # Computer Vision
 
 ## 1.[Stanford CS231n](https://www.youtube.com/playlist?list=PLf7L7Kg8_FNxHATtLwDceyh72QQL9pvpQ)
@@ -3168,6 +3185,8 @@ type Algebra f a = f a -> a
 > The problem is the same sensationalist coverage that makes us overestimate the risk of terror, makes it really hard for politicians to say no to security theater.
 
 ## 5.[Martin Jacques - The UK in a China centric World](https://www.youtube.com/watch?v=z_A0S5IyHt0)
+
+## 6.[House of Commons - Parliamentlive.tv](http://parliamentlive.tv/Commons)
 
 
 # Economic
