@@ -2525,6 +2525,43 @@ data Compose p q a b = Coend (TenProd p q a b)
 
 ## 34.[Michael Arntzenius - DB ⋈ FP = Datafun: a new functional query language](https://www.youtube.com/watch?v=7HUotKIVFig)
 
+## 35.["Propositions as Types" by Philip Wadler](https://www.youtube.com/watch?v=IOiZatlZtGU)
+
+> Curry-Howard correspondence (Logic vs Informatics)
+> 1. Natural Deduction (Gentzen, 1935) | Typed Lambda Calculus (Church, 1940)
+> 2. Type Schemes (Hindley, 1969) | ML Type System (Milner, 1975)
+> 3. System F (Girard, 1972) | Polymorphic Lambda Calculus (Reynolds, 1974)
+> 4. Modal Logic (Lewis, 1910) | Monads (state, exceptions) (Kleisli, 1965; Moggi, 1987)
+> 5. Classical-Intuitionistic Embedding (Godel, 1933) | Continuation Passing Style (Reynolds, 1972)
+> 6. Linear Logic (Jean-Yves Girard, 1987) | Session-typed Pi-Calculus (Honda, 1993)
+
+> Wikipedia:
+> Lafont (1993) first showed how intuitionistic linear logic can be explained as a logic of resources, so providing the logical language with access to formalisms that can be used for reasoning about resources within the logic itself, rather than, as in classical logic, by means of non-logical predicates and relations.
+
+> Functional Languages (with Lambda Calculus at its core)
+> 1. Lisp (McCarthy, 1960)
+> 2. Iswim (Landin, 1966)
+> 3. Scheme (Steele, Sussman, 1975)
+> 4. ML (Milner, Gordon, Wadsworth, 1979)
+> 5. Haskell (Hudak, Peyton Jones, **Wadler**, 1987)
+> 6. O'Caml (Leroy, 1996)
+> 7. Erlang (Armstrong, Virding, Williams, 1996)
+> 8. Scala (Odersky, 2004)
+> 9. F# (Syme, 2006)
+
+> Proof Assistants (with Dependent Type at its core)
+> 1. Automath (de Bruijin, 1970)
+> 2. Type Theory (Martin Lof, 1975)
+> 3. Mizar (Trybulec, 1975)
+> 4. ML/LCF (Milner, Gordon, Wadsworth, 1979)
+> 5. NuPrl (Constable, 1985)
+> 6. HOL (Gordon, Melham, 1988)
+> 7. Coq (Huet, Coquand, 1988)
+> 8. Isabelle (Paulson, 1993)
+> 9. Epigram (Mcbride, McKinna, 2004)
+> 10. Agda (Norell, 2005)
+
+> Models of computation are not invented but discovered.
 
 # Computer Vision
 
