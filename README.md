@@ -2525,6 +2525,19 @@ data Compose p q a b = Coend (TenProd p q a b)
 
 ## 34.[Michael Arntzenius - DB ⋈ FP = Datafun: a new functional query language](https://www.youtube.com/watch?v=7HUotKIVFig)
 
+for bounded query
+
+> set comprehension
+> Walder's approach to deal with potential recursion in the host language
+> - restricts the DSL to first-order input and first-order output
+> - inlining everything to reduce higher-order function
+
+for unbounded recursive query
+
+> how to find fixed point efficiently
+
+> [A Theory of Changes for Higher-Order Languages - Incrementalizing λ-Calculi by Static Differentiation](https://arxiv.org/abs/1312.0658)
+
 ## 35.["Propositions as Types" by Philip Wadler](https://www.youtube.com/watch?v=IOiZatlZtGU)
 
 [paper](https://homepages.inf.ed.ac.uk/wadler/papers/propositions-as-types/propositions-as-types.pdf)
@@ -2588,6 +2601,21 @@ data Compose p q a b = Coend (TenProd p q a b)
 ## 38.[Session Types for Me and You and Everyone We Know! - Zeeshan Lakhani](https://www.youtube.com/watch?v=HEg088cW528)
 
 > binary session type
+
+## 39.["The Mess We're In" by Joe Armstrong](https://www.youtube.com/watch?v=lKXe3HUG2l4)
+
+> Joe Armstrong, author of Erlang
+
+> Dijkstra said, "The art of programming is the art of organizing complexity, of mastering multitude and avoiding its bastard chaos as effectively as possible."
+> We have failed miserably.
+
+> How to condense the amount of information stored on the Internet.
+
+We need to have a "platform" for information to complete for survival.
+The default is not supposed to be storing anything but setting a limit for everything.
+
+People don't realize the amount of pressure we have put on the environment because environment doesn't have a voice, which can be think of as the lowest social class.
+It will slowly fight back. Though the direct impacts first land on the lower classes, they will eventually define the fate of mankind.
 
 # Computer Vision
 
