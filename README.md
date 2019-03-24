@@ -2527,16 +2527,26 @@ data Compose p q a b = Coend (TenProd p q a b)
 
 ## 35.["Propositions as Types" by Philip Wadler](https://www.youtube.com/watch?v=IOiZatlZtGU)
 
+[paper](https://homepages.inf.ed.ac.uk/wadler/papers/propositions-as-types/propositions-as-types.pdf)
+
+> Proposition ~ Type
+> Proofs ~ Programs
+> Proof Normalization (Cut Elimination) ~ Evaluation (function application in lambda calculus; communication)
+
 > Curry-Howard correspondence (Logic vs Informatics)
 > 1. Natural Deduction (Gentzen, 1935) | Typed Lambda Calculus (Church, 1940)
 > 2. Type Schemes (Hindley, 1969) | ML Type System (Milner, 1975)
 > 3. System F (Girard, 1972) | Polymorphic Lambda Calculus (Reynolds, 1974)
 > 4. Modal Logic (Lewis, 1910) | Monads (state, exceptions) (Kleisli, 1965; Moggi, 1987)
 > 5. Classical-Intuitionistic Embedding (Godel, 1933) | Continuation Passing Style (Reynolds, 1972)
-> 6. Linear Logic (Jean-Yves Girard, 1987) | Session-typed Pi-Calculus (Honda, 1993)
+> 6. Linear Logic (Jean-Yves Girard, 1987) | Session-typed Pi-Calculus
 
 > Wikipedia:
 > Lafont (1993) first showed how intuitionistic linear logic can be explained as a logic of resources, so providing the logical language with access to formalisms that can be used for reasoning about resources within the logic itself, rather than, as in classical logic, by means of non-logical predicates and relations.
+
+> [Linear Logic, Session Types and Deadlock-Freedom](https://www.youtube.com/watch?v=R7pJDDNy--k)
+> Caires and Pfenning (2010) discovered a strong correspondence between a session type system for pi calculus and a linear logic.
+> Proof normalization (cut elimination) corresponds to communication. 
 
 > Functional Languages (with Lambda Calculus at its core)
 > 1. Lisp (McCarthy, 1960)
@@ -2562,6 +2572,22 @@ data Compose p q a b = Coend (TenProd p q a b)
 > 10. Agda (Norell, 2005)
 
 > Models of computation are not invented but discovered.
+
+## 36.[Linear Logic, Session Types and Deadlock-Freedom](https://www.youtube.com/watch?v=R7pJDDNy--k)
+
+> Kobayashi (1997) developed type systems for deadlock-freedom, based on the idea that it must be possible to consistently order communication channels
+> Padovani (2013, 2014) adapted the idea to session types.
+
+> - Every proposition is tagged with a (natural number) priority, and proofs must follow conditions on priorities.
+> - When forming a cycle, the priorities of the connected types must be equal.
+
+## 37.[Embedding Session Types in Haskell](https://www.youtube.com/watch?v=rweCcOTfgWs)
+
+> HOAS embedding
+
+## 38.[Session Types for Me and You and Everyone We Know! - Zeeshan Lakhani](https://www.youtube.com/watch?v=HEg088cW528)
+
+> binary session type
 
 # Computer Vision
 
