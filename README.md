@@ -2617,6 +2617,30 @@ The default is not supposed to be storing anything but setting a limit for every
 People don't realize the amount of pressure we have put on the environment because environment doesn't have a voice, which can be think of as the lowest social class.
 It will slowly fight back. Though the direct impacts first land on the lower classes, they will eventually define the fate of mankind.
 
+## 40.[Stanford Seminar - Faults, Scaling, and Erland Concurrency](https://www.youtube.com/watch?v=YaUPdgtUYko)
+
+> decouple things through messaging and don't break the law of physics (transmission of information is capped by the speed of light thus we cannot assume instantaneous synchronization across subsystems)
+
+> six rules for fault tolerant systems
+> 1. isolation
+>   - isolated independent computations
+>   - no shared memory, do copying
+>   - scalability and fault tolerance come hand in hand
+> 2. concurrency
+>   - rather than making fastest and safest single sequential processing unit, send out thousands of them and let them crash
+> 3. must detect failures
+>   - detection of failure should not be blocked by the boundary of subsystems
+>   - failures should be captured globally rather than locally so one's failure can be fixed by another
+> 4. fault identification
+>   - store and classify failures
+> 5. live code upgrade
+>   - minimum down time
+> 6. stable storage
+>   - the amount of energy required to store|transmit|analyze data
+>   - we will be able to analyze data only if computation grows faster than storage
+
+## 41.[UCR Applied Category Theory Seminar: The Pi Calculus](https://www.youtube.com/watch?v=NTJBMbTIJis)
+
 # Computer Vision
 
 ## 1.[Stanford CS231n](https://www.youtube.com/playlist?list=PLf7L7Kg8_FNxHATtLwDceyh72QQL9pvpQ)
