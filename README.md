@@ -2389,6 +2389,39 @@ the same update can be processed multiple times across multiple render phases
 
 ### 2. Haskell Live-Coding, Session 2.1, Q&A, Free Monad
 
+
+
+### 8. Haskell Live-Coding, Session 5.2, Propagators
+
+> Distributed Deterministic Computation
+
+> Join Semilattice
+
+> top (`⊤`)~ contradiction
+> bottom (`⊥`) ~ no information
+
+> contradiction
+>  /   \
+> T     F
+>  \   /
+>   `⊥`
+>
+> `T ∨ F = ⊤`
+
+> Hasse Diagram
+> bottom ~ empty set
+
+> Datalog
+> bottom ~ empty table with no rows
+
+> CRDTs (conflict-free replicated data types)
+> - CvRDTs (convergent replicated data types)
+>   - state-based, send full local state to other replicates
+>   - commutative, associative, idempotent
+> - CmRDTs (commutative replicated data types)
+>   - operation-based, transmitting only the update operation
+>   - commutative, associative
+
 ## 23.[Dan Doel - Introduction to Low Level Haskell Optimization](https://www.youtube.com/watch?v=McFNkLPTOSY)
 
 ## 24.[Edward Kmett - Propagators YOW! Lambda Jam 2016](https://www.youtube.com/watch?v=acZkF6Q2XKs)
@@ -2640,6 +2673,8 @@ It will slowly fight back. Though the direct impacts first land on the lower cla
 >   - we will be able to analyze data only if computation grows faster than storage
 
 ## 41.[UCR Applied Category Theory Seminar: The Pi Calculus](https://www.youtube.com/watch?v=NTJBMbTIJis)
+
+## 42.[Andrey Mokhov - Algebraic Graphs with Class (Functional Pearl)](https://www.youtube.com/watch?v=EdQGLewU-8k)
 
 # Computer Vision
 
