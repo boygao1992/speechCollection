@@ -2422,6 +2422,8 @@ the same update can be processed multiple times across multiple render phases
 >   - operation-based, transmitting only the update operation
 >   - commutative, associative
 
+### 9. Haskell Live-Coding, Session 6, CEK Machines, Part 1
+
 ## 23.[Dan Doel - Introduction to Low Level Haskell Optimization](https://www.youtube.com/watch?v=McFNkLPTOSY)
 
 ## 24.[Edward Kmett - Propagators YOW! Lambda Jam 2016](https://www.youtube.com/watch?v=acZkF6Q2XKs)
