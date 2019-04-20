@@ -2678,6 +2678,31 @@ It will slowly fight back. Though the direct impacts first land on the lower cla
 
 ## 42.[Andrey Mokhov - Algebraic Graphs with Class (Functional Pearl)](https://www.youtube.com/watch?v=EdQGLewU-8k)
 
+## 43.[MuniHac 2018: Keynote: Beautiful Template Haskell](https://www.youtube.com/watch?v=AzJVFkm42zM)
+
+## 44.[Alexis King - Hackett: a metaprogrammable Haskell](https://www.youtube.com/watch?v=g6UCeHiKodo)
+
+>    |- type inference -|
+>    |                  v
+> expressions         types
+>    ^                  |
+>    |-   typeclasses  -|
+
+> Macro Metaprogramming vs Typeclass Metaprogramming
+> - Macros excel at local code transformations. 
+>   - Macros can provide custom syntax. Able to extend the expression structures of the language.
+> - Typeclasses permit global code transformations. 
+>   - But tethered to the syntax of the host language.
+
+> `lisp_macro :: AST -> AST`
+> `hackett_macro :: (AST, Type) -> AST`
+
+> [Type Systems as Macros](http://www.ccs.neu.edu/home/stchang/popl2017/)
+
+## 45.[f(by) 2019 - Christoph Hegemann, TYPE INFERENCE FROM SCRATCH](https://www.youtube.com/watch?v=ytPAlhnAKro)
+
+[Write You a Haskell - Hindley-Milner Inference](http://dev.stephendiehl.com/fun/006_hindley_milner.html)
+
 # Computer Vision
 
 ## 1.[Stanford CS231n](https://www.youtube.com/playlist?list=PLf7L7Kg8_FNxHATtLwDceyh72QQL9pvpQ)
