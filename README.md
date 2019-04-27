@@ -2703,6 +2703,91 @@ It will slowly fight back. Though the direct impacts first land on the lower cla
 
 [Write You a Haskell - Hindley-Milner Inference](http://dev.stephendiehl.com/fun/006_hindley_milner.html)
 
+## 46.[Destination: Wrangling Monad Transformer Stacks](https://www.youtube.com/watch?v=8t8fjkISjus)
+
+Generalized Newtype Deriving
+
+The lift-lift-lift Problem
+- transformers, Control.Monad.IO.Class (liftIO)
+  - `liftIO :: forall m. MonadIO m => IO ~> m`
+  - pro: Haskell-98 compliant
+  - cons:
+    - only works on monad stacks on top of IO
+    - only goes from the base to the very top
+- transformers-base, Control.Monad.Base (liftBase)
+  - `class MonadBase b m | m -> b`
+  - `liftBase :: forall b m. MonadBase b m => b ~> m`
+  - pro: works with any monad as the base
+  - cons: 
+    - GHC specific (language extensions)
+      - `MultiParamTypeClasses`
+      - `FunctionalDependencies`
+    - only goes from the base to the top
+- MonadStack, Control.Monad.MonadStack (liftFrom)
+  - `class MonadStack m n`
+  - `liftFrom :: forall m n. MonadStack m n => m ~> n`
+  - pros:
+    - from any monad in the stack up
+    - only need to implement `MonadTrans` to use
+  - cons:
+    - GHC specific
+      - `MultiParamTypeClasses`
+    - only works on concrete monad transformers
+      - e.g.
+        - `MonadStack IO (ReaderT r IO)`
+        - `MonadStack (ReaderT r IO) (WriterT w (ReaderT r IO))`
+      - can no longer use action-packed type class to focus on a specific transformer layer on an arbitrary monad transformer stack
+        - e.g. `MonadReader r m =>`, `MonadWriter w m =>`
+- MonadCompose, Control.Monad.Lifter (lf)
+  - `class Lifter m n`
+  - `lf :: forall m n. Lifter m n => m ~> n`
+  - pro:
+    - most general (works on `Monad Plus` instances, etc.)
+  - con:
+    - GHC specific
+      - `MultiParamTypeClasses`
+      - `OverlappingInstances`
+        - overlapping instances defined in the same module behave the same way as instance chains in Purescript
+        - useful for type-level pattern matching
+      - `UndecidableInstances`
+
+Unlift
+monad-control, Control.Monad.Trans.Control
+```haskell
+class MonadBase b m => MonadBaseControl b m | m -> b where
+  -- monadic state that @m@ adds to the base monad @b@
+  -- for a transformer stack, StM is defined recursively
+  type StM m a 
+  restoreM :: Stm m a -> m a
+  liftBaseWith :: (RunInBase m b -> b a) -> m a
+
+type RunInBase m b = forall a. m a -> b (StM m a)
+
+Control.Exception.catch
+  :: Exception e => IO a -> (e -> IO a) -> IO a
+
+myCatch
+  :: forall m e a
+  .  ( Moand m
+     , MonadBaseControl IO m
+     , Exception e
+     )
+  => m a 
+  -> (e -> m a) 
+  -> m a
+myCatch act handler = do
+  st <- liftBaseWith go :: IO (StM m a)
+  restoreM st
+  where
+    go :: RunInBase m IO -> IO (StM m a)
+    go run = 
+      catch -- :: IO (StM m a) -> (e -> IO (StM m a)) -> IO (StM m a)
+        (run act :: IO (StM m a))
+        (run . handler :: e -> IO (StM m a))
+```
+
+## 47.[Monad Transformer State - Michael Snoyman](https://www.youtube.com/watch?v=KZIN9f9rI34)
+
 # Computer Vision
 
 ## 1.[Stanford CS231n](https://www.youtube.com/playlist?list=PLf7L7Kg8_FNxHATtLwDceyh72QQL9pvpQ)
