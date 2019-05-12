@@ -2788,6 +2788,8 @@ myCatch act handler = do
 
 ## 47.[Monad Transformer State - Michael Snoyman](https://www.youtube.com/watch?v=KZIN9f9rI34)
 
+## 48.[How to Handle Asynchronous Exceptions in Haskell](https://www.youtube.com/watch?v=T5y8sFmCFnA)
+
 # Computer Vision
 
 ## 1.[Stanford CS231n](https://www.youtube.com/playlist?list=PLf7L7Kg8_FNxHATtLwDceyh72QQL9pvpQ)
