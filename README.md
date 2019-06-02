@@ -2790,7 +2790,7 @@ myCatch act handler = do
 
 ## 48.[How to Handle Asynchronous Exceptions in Haskell](https://www.youtube.com/watch?v=T5y8sFmCFnA)
 
-# Computer Vision
+# Artificial Intelligence
 
 ## 1.[Stanford CS231n](https://www.youtube.com/playlist?list=PLf7L7Kg8_FNxHATtLwDceyh72QQL9pvpQ)
 
@@ -2853,6 +2853,10 @@ CIFAR10
 ### lec 4
 1. gradient calcuation for backpropagation, chain rule
 2. vectorize matrix operations
+
+## 2. [Numenta research meetings | Twitch](https://www.twitch.tv/videos/429370152)
+
+## 3. [HTM School Video Series](https://numenta.org/htm-school/)
 
 # Math
 
@@ -3205,7 +3209,7 @@ type Algebra f a = f a -> a
 
 ### 9.2 [Lenses categorically](https://www.youtube.com/watch?v=rAa3pGp97IM&list=PLbgaMIhjbmElia1eCEZNvsVscFef9m0dm&t=564s&index=19)
 
-## 7 [Seven Sketches in Compositionality: An Invitation to Applied Category Theory - David I. Spivak and Brendan Fong](https://www.youtube.com/playlist?list=PLKvKTRWejv0KqyzCH9gUD4k1QIKj10stE)
+## 7. [Seven Sketches in Compositionality: An Invitation to Applied Category Theory - David I. Spivak and Brendan Fong](https://www.youtube.com/playlist?list=PLKvKTRWejv0KqyzCH9gUD4k1QIKj10stE)
 
 [web page](http://math.mit.edu/~dspivak/teaching/sp18/)
 
@@ -3270,6 +3274,8 @@ type Algebra f a = f a -> a
 ### Chapter 6: Electric circuits: hypergraph categories and operads.
 
 ### Chapter 7: Logic of behavior: sheaves toposes, and internal languages.
+
+## 8. [Shape Analysis |  Justin Solomon@MIT](http://groups.csail.mit.edu/gdpgroup/6838_spring_2017.html)
 
 
 # Politics
@@ -3451,6 +3457,8 @@ type Algebra f a = f a -> a
 ## 5.[Martin Jacques - The UK in a China centric World](https://www.youtube.com/watch?v=z_A0S5IyHt0)
 
 ## 6.[House of Commons - Parliamentlive.tv](http://parliamentlive.tv/Commons)
+
+## 7.[Zeitgeist Trilogy](http://www.zeitgeistmovie.com/)
 
 
 # Economic
