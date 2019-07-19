@@ -3558,3 +3558,62 @@ then the government needs a way to comfort the low-income population, that is th
   - to maintain such a system, government relies on external loans which doesn't help the economy but only defers the burst of a crisis
     - e.g. Greek
 
+
+## 4.[David Harvey, Talk, 24 October 2018](https://www.youtube.com/watch?v=zNCkDgP4wLA)
+
+root cause: perpetual accumulation of capital
+
+sinks of surplus productive capacity
+- military expenditure
+  - military-industrial complex
+  - actively create new enemies
+  - arms race
+- suburbanization
+  - a social project, an economic project, a form of ensuring social stability
+  - depended upon home ownership, which is also a thing about social stability
+    - home owners in debt 
+      - don't go on street and strike
+      - not gonna form a revolutionary class and rise up against the system
+      - because they got their suburb and they got their lives, they need all the commodities, e.g. automobiles, energy, etc. to sustain such a way of life
+    - "US typically has gotten out of crisis by building houses and filling them with things"
+  - suburban became an affordable space which many people from WW2 could look to come back to a reasonable family life
+  - suburban living and support of suburban family life, became a wonderful way 
+    - to absorb all of the surpluses to deal with potential discontents of the population
+    - to create a population which is very much in favor of the continuation of capitalist system
+  - requirements
+    1. need a population with income stream willing to pay mortgage and to pay for this way of live
+      - emergence of a privileged working class, largely white
+      - which became the backbone of conservative thinking and conservative politics
+    2. a strong economic basis
+      - strong support for all sorts of worker unions
+      - a dynamic balance between workers and capitalists in which the world was stabilized 
+
+we still paying the price of that suburban solution to the perpetual accumulation of capital
+- profligate in energy consumption
+- profligate in the use of land
+- environmental problems
+
+capitalism has to
+- change the way people think about the world
+- change the meaning of "wants" and "needs" and "desires"
+- manipulate and make the suburb an object to desire
+- transformation of 
+  - physical environment
+    - e.g. interstate high way system
+  - landscape in which people live
+  - a sense of nature and what nature is all about
+  - social relations among people
+  - cultural norm
+
+2007/2008 financial crisis reveal the reality:
+the capacity of the system to sustain itself by 
+heavy indebtedness on population which have no means to pay off that debt
+
+(which not only works for their own people but the third world, see Core and Periphery Theory)
+
+the solution that temporarily stabilized the system
+- urbanization projects in China in an insane speed (half of global consumption in many kinds of raw materials)
+- temporarily mitigate the problem of surplus of liquidity by creating more liquidity
+
+this is the insane system we all getting into and an insane form of urbanization as a result
+- we are building cities for people to invest, not for people to live in
