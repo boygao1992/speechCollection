@@ -2790,6 +2790,20 @@ myCatch act handler = do
 
 ## 48.[How to Handle Asynchronous Exceptions in Haskell](https://www.youtube.com/watch?v=T5y8sFmCFnA)
 
+## 49.[Gerry Sussman: We Really Don't Know How to Compute!](https://www.youtube.com/watch?v=Rk76BurH384)
+
+> Propagators: independent stateless machines connecting stateful cells
+
+> All operators are extensible generics: cells merge information monotonically
+
+> globally inconsistent world view but locally consistent sub- world view
+
+> Truth maintenance system in every cell, implementation with generic merge
+
+> dependency-directed backtracking
+
+[ekmett/propagators](https://github.com/ekmett/propagators)
+
 # Artificial Intelligence
 
 ## 1.[Stanford CS231n](https://www.youtube.com/playlist?list=PLf7L7Kg8_FNxHATtLwDceyh72QQL9pvpQ)
@@ -3614,6 +3628,7 @@ heavy indebtedness on population which have no means to pay off that debt
 the solution that temporarily stabilized the system
 - urbanization projects in China in an insane speed (half of global consumption in many kinds of raw materials)
 - temporarily mitigate the problem of surplus of liquidity by creating more liquidity
+  - essentially tax the lower class (and the third world) and let them to pay the price
 
 this is the insane system we all getting into and an insane form of urbanization as a result
 - we are building cities for people to invest, not for people to live in
