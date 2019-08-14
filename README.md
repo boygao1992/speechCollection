@@ -739,19 +739,22 @@ code organization, especially view functions
 
 ## 8. Elm Europe 2017
 
-### 1. [Elm Europe 2017 - Matthew Griffith - Understanding style](https://www.youtube.com/watch?v=NYb2GDWMIm0)
+### 1. [Elm Europe 2017 - Jakub Hampl - Visualizing data with elm](https://www.youtube.com/watch?v=Pf1xQ76JgmQ)
 
-### 2. [Elm Europe 2017 - Jakub Hampl - Visualizing data with elm](https://www.youtube.com/watch?v=Pf1xQ76JgmQ)
+### 2. ["Infecting the visualization design process with the elm philosophy" by Alexander Kachkaev](https://www.youtube.com/watch?v=K-yoLxnm95A)
 
-### 3. ["Infecting the visualization design process with the elm philosophy" by Alexander Kachkaev](https://www.youtube.com/watch?v=K-yoLxnm95A)
+### 3. [Elm Europe 2017 - Matthew Griffith - Understanding style](https://www.youtube.com/watch?v=NYb2GDWMIm0)
 
-### 4. [Elm Europe 2017 - Andrey Kuzmin - Bringing the fun to graphics programming](https://www.youtube.com/watch?v=Z-6ETEBNlMs)
+### 4. [Elm Europe 2017 - Jakub Hampl - Visualizing data with elm](https://www.youtube.com/watch?v=Pf1xQ76JgmQ)
+
+
+### 5. [Elm Europe 2017 - Andrey Kuzmin - Bringing the fun to graphics programming](https://www.youtube.com/watch?v=Z-6ETEBNlMs)
 
 WebGL
 
-### 5. ["Lessons from 100k LOC elm at Futurespace" by Mark Skipper and Decio Ferreira](https://www.youtube.com/watch?v=0AosqGTEa0Q)
+### 6. ["Lessons from 100k LOC elm at Futurespace" by Mark Skipper and Decio Ferreira](https://www.youtube.com/watch?v=0AosqGTEa0Q)
 
-### 6. [Elm Europe 2017 - Richard Feldman - Scaling Elm Apps](https://www.youtube.com/watch?v=DoA4Txr4GUs&t=986s)
+### 7. [Elm Europe 2017 - Richard Feldman - Scaling Elm Apps](https://www.youtube.com/watch?v=DoA4Txr4GUs&t=986s)
 
 > purpose of update function: routes messages to logic
 > "recommend sharing code with helper functions instead of recursively calling the update function"
@@ -765,7 +768,7 @@ Actually, there is an isomorphism between "attached" (OOP) and "detached" (FP) s
 The approach the lecturer presented by returning additional value to the caller (higher-order update function) is exactly backward (child-parent) propagation of message.
 
 
-### 7.[Elm Europe 2017 - Greg Ziegan - Building Reorderable UI in Elm](https://www.youtube.com/watch?v=UiLGIQUGFQg)
+### 8.[Elm Europe 2017 - Greg Ziegan - Building Reorderable UI in Elm](https://www.youtube.com/watch?v=UiLGIQUGFQg)
 
 ## 9. Kevin Yank on Elm
 [Elm in Production: Surprises & Pain Points](https://www.youtube.com/watch?v=LZj_1qVURL0)
@@ -2803,6 +2806,42 @@ myCatch act handler = do
 > dependency-directed backtracking
 
 [ekmett/propagators](https://github.com/ekmett/propagators)
+
+## 50.[ICFP 2015 - Practical Principled FRP](https://www.youtube.com/watch?v=WajfYdqCeAM)
+
+[paper](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.724.7758&rep=rep1&type=pdf)
+
+> Behavior a ~ Time -> a
+> Event a ~ (Time, a)
+
+> forbid access to the past
+
+> whenJust 
+>   :: Behavior (Maybe a) -> Event () -> Event a
+>    ~ Behavior (Maybe a) -> Time -> Event a
+>    ~ Behavior (Maybe a) -> Behavior (Event a)
+
+> sample :: Behavior a -> Now a
+
+> snapshot :: Behavior a -> Event () -> Event a
+>           ~ Behavior a -> Behavior (Event a)
+> snapshot :: Behavior a -> Behavior (Maybe (Event a))
+> - past -> Nothing
+> - present/future -> Just a
+
+> hookup 
+> :: (Behavior in -> Behavior out) -- signal function, FRP program
+> -> IO in -- Input producer
+> -> (out -> IO ())  -- Output consumer
+> -> IO ()
+
+> sample :: Behavior a -> Now a
+> async :: IO a -> Now (Event a)
+> plan :: Event (Now a) -> Now (Event a)
+
+## 51.[Lambda Jam 2015 - Conal Elliott - The Essence and Origins of Functional Reactive Programming](https://www.youtube.com/watch?v=j3Q32brCUAI)
+
+[Lambda Jam 2015 - Conal Elliott - Denotational Design: From Meanings To Programs #YOWLambdaJam](https://www.youtube.com/watch?v=bmKYiUOEo2A)
 
 # Artificial Intelligence
 
