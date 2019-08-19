@@ -2843,6 +2843,8 @@ myCatch act handler = do
 
 [Lambda Jam 2015 - Conal Elliott - Denotational Design: From Meanings To Programs #YOWLambdaJam](https://www.youtube.com/watch?v=bmKYiUOEo2A)
 
+## 52.[From Zero to Quake 3 in Haskell](https://www.twitch.tv/ocharles_/videos?filter=all&sort=time)
+
 # Artificial Intelligence
 
 ## 1.[Stanford CS231n](https://www.youtube.com/playlist?list=PLf7L7Kg8_FNxHATtLwDceyh72QQL9pvpQ)
